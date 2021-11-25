@@ -52,6 +52,11 @@ module.exports = {
     local: {
       url: process.env.LOCAL_URL || "http://127.0.0.1:8545",
     },
+    mainnet: {
+      url: "https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
       accounts:
