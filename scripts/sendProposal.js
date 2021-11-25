@@ -25,11 +25,13 @@ class ProposalActions {
 
 
 async function main() {
+  //Remove this for the real thing
   await hre.network.provider.request({
   method: "hardhat_impersonateAccount",
   params: ["0x26a78D5b6d7a7acEEDD1e6eE3229b372A624d8b7"],
   });
 
+  //Remove this for the real thing
   const signer = await hre.ethers.getSigner("0x26a78D5b6d7a7acEEDD1e6eE3229b372A624d8b7");
 
   const proposalActions = new ProposalActions();
@@ -209,7 +211,7 @@ async function main() {
   );
 
   //Send transaction. Logs proposal id.
-  const tx = await aaveGovernanceV2.connect(signer).callStatic.create( //remove callStatic for the real thing
+  const tx = await aaveGovernanceV2.connect(signer).callStatic.create( //remove connect().callStatic for the real thing
     shortExecutorAddress, 
     [fxRootAddress], 
     [ethers.BigNumber.from(0)], 
