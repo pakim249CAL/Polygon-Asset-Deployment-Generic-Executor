@@ -28,7 +28,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-promise": "^5.1.0",
     "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.4.7",
+    "ethers": "^5.5.1",
     "hardhat": "^2.6.4",
     "hardhat-contract-sizer": "^2.1.1",
     "hardhat-gas-reporter": "^1.0.4",
@@ -38,7 +38,10 @@
     "solidity-coverage": "^0.7.17"
   },
   "dependencies": {
+    "@typechain/ethers-v5": "^8.0.4",
+    "@typechain/hardhat": "^3.0.0",
     "hardhat-abi-exporter": "^2.3.0",
-    "hardhat-etherscan": "^1.0.1"
+    "hardhat-etherscan": "^1.0.1",
+    "yarn": "^1.22.17"
   }
 }

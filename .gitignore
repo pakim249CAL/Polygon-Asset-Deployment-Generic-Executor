@@ -7,3 +7,4 @@ artifacts
 .idea
 .DS_Store
 build
+typechain-types

@@ -5,6 +5,7 @@ require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("hardhat-abi-exporter");
+require('@typechain/hardhat')
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -24,7 +25,14 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: {
-    version: "0.6.12",
+    compilers: [
+      {
+        version: "0.6.12"
+      },
+      {
+        version: "0.7.5"
+      },
+    ],
     settings: {
       optimizer: {
         enabled: true,
@@ -38,7 +46,7 @@ module.exports = {
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
       forking: {
-        url: "https://mainnet.infura.io/v3/3d8860b0af1f45c9821d2a179a1c16b9",
+        url: "https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
       },
     },
     local: {
