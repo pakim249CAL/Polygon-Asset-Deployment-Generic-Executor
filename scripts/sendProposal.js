@@ -40,8 +40,8 @@ async function main() {
   const polygonLendingPoolConfiguratorAddress = '0x26db2B833021583566323E3b8985999981b9F1F3';
   const shortExecutorAddress = '0xEE56e2B3D491590B5b31738cC34d5232F378a8D5';
   const fxRootAddress = '0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2';
-  const oracleAddress = '0x0229F777B0fAb107F9591a41d5F02E4e98dB6f2d';
-  const aTokenAddress = '0x3cb4ca3c9dc0e02d252098eebb3871ac7a43c54d';
+  const oracleAddress = '0x0229F777B0fAb107F9591a41d5F02E4e98dB6f2d'; // Polygon AAVE Oracle Address
+  const aTokenAddress = '0x3cb4ca3c9dc0e02d252098eebb3871ac7a43c54d'; 
   const stableDebtAddress = '0x72a053fa208eaafa53adb1a1ea6b4b2175b5735e';
   const variableDebtAddress = '0x1d22ae684f479d3da97ca19ffb03e6349d345f24';
 
@@ -163,6 +163,8 @@ async function main() {
     true
   ];
 
+  // Bridge Executor calls the polygon asset deployer executor with delegate call with the arguments above
+  // Delegate call is necessary to have one contract call fulfill all the asset deployment responsibilities reliably
   function addAssetAction(parameters) {
     const encodedArguments = ethers.utils.defaultAbiCoder.encode(createAssetAbiParameters, parameters);
     proposalActions.targets.push(polygonAssetDeployerAddress);
@@ -170,8 +172,6 @@ async function main() {
     proposalActions.signatures.push('execute(address,address,address,address,address,uint256,uint256,uint256,uint256,uint8,bool,bool,bool)');
     proposalActions.calldatas.push(encodedArguments);
     proposalActions.withDelegatecalls.push(true);
-
-
   }
 
   addAssetAction(ghstParameters);
@@ -181,7 +181,7 @@ async function main() {
   addAssetAction(sushiParameters);
   addAssetAction(linkParameters);
 
-  //Add oracles
+  //Add oracles for all new assets
   const oracleEncodedArguments = ethers.utils.defaultAbiCoder.encode([
     'address[]', //assets
     'address[]' //oracles
@@ -196,10 +196,10 @@ async function main() {
     ],
     [
       '0xe638249AF9642CdA55A92245525268482eE4C67b',
-      '0x0000000000000000000000000000000000000000', //REPLACE
-      '0x0000000000000000000000000000000000000000', //REPLACE
+      '0x03CD157746c61F44597dD54C6f6702105258C722',
+      '0xC70aAF9092De3a4E5000956E672cDf5E996B4610', 
       '0x1CF68C76803c9A415bE301f50E82e44c64B7F1D4',
-      '0x0000000000000000000000000000000000000000', //REPLACE
+      '0x17414Eb5159A082e8d41D243C1601c2944401431',
       '0xb77fa460604b9C6435A235D057F7D319AC83cb53'
     ]
   ]);
@@ -231,6 +231,7 @@ async function main() {
 
   //Encoding
 
+  // This encodes the proposal call data for the base bridge executor
   proposalActions.encodedActions = ethers.utils.defaultAbiCoder.encode(
     ['address[]', 'uint256[]', 'string[]', 'bytes[]', 'bool[]'],
     [
@@ -242,14 +243,18 @@ async function main() {
     ]
   );
 
+  // This encodes the proposal call data for the polygon bridge executor
   proposalActions.encodedRootCalldata = ethers.utils.defaultAbiCoder.encode(
     ['address', 'bytes'],
     [polygonBridgeExecutorAddress, proposalActions.encodedActions]
   );
 
-  //Send transaction. Logs proposal id.
-  const tx = await aaveGovernanceV2.connect(signer).callStatic.create( //remove connect().callStatic for the real thing
-    shortExecutorAddress, 
+  /* This sends the actual proposal to the AAVE V2 Governance contract on Ethereum.
+   * Upon the proposal passing and queued, the executor will call sendMessageToChild
+   * on FxRoot with the twice encoded call data.
+  */ 
+  const tx = await aaveGovernanceV2.connect(signer).callStatic.create( //remove connect().callStatic for the real thing. Just there for testing purposes
+    shortExecutorAddress,
     [fxRootAddress], 
     [ethers.BigNumber.from(0)], 
     ['sendMessageToChild(address,bytes)'], 
