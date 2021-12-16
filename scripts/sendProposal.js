@@ -24,6 +24,10 @@ class ProposalActions {
   }
 
 
+function buildProposalPayload() {
+
+};
+
 async function main() {
   //Remove this for the real thing.
   await hre.network.provider.request({
@@ -253,16 +257,16 @@ async function main() {
    * Upon the proposal passing and queued, the executor will call sendMessageToChild
    * on FxRoot with the twice encoded call data.
   */ 
-  const tx = await aaveGovernanceV2.connect(signer).callStatic.create( //remove connect().callStatic for the real thing. Just there for testing purposes
+  const tx = await aaveGovernanceV2.connect(signer).create( //remove connect().callStatic for the real thing. Just there for testing purposes
     shortExecutorAddress,
     [fxRootAddress], 
-    [ethers.BigNumber.from(0)], 
+    [ethers.BigNumber.from('0')], 
     ['sendMessageToChild(address,bytes)'], 
     [proposalActions.encodedRootCalldata], 
     [false], 
     '0xf7a1f565fcd7684fba6fea5d77c5e699653e21cb6ae25fbf8c5dbc8d694c7949' //TODO: replace with correct IPFS hash
   );
-  console.log(tx);
+
 }
 
 main()

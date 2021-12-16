@@ -27,7 +27,13 @@ module.exports = {
   solidity: {
     compilers: [
       {
+        version: "0.5.2"
+      },
+      {
         version: "0.6.12"
+      },
+      {
+        version: "0.7.3"
       },
       {
         version: "0.7.5"
@@ -46,7 +52,8 @@ module.exports = {
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
       forking: {
-        url: "https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
+        url: "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
+        blockNumber: 22579000,
       },
     },
     local: {
@@ -94,6 +101,6 @@ module.exports = {
     pretty: true,
   },
   mocha: {
-    timeout: 50000,
+    timeout: 5000000,
   },
 };
