@@ -39,13 +39,13 @@ describe("Check Proposal", function() {
     //Just doing the work of decoding to help diagnose issues
     const decodedFx = ethers.utils.defaultAbiCoder.decode(['address', 'address', 'bytes'], fxData);
     const decodedExecutor = ethers.utils.defaultAbiCoder.decode(['address[]', 'uint256[]', 'string[]', 'bytes[]', 'bool[]'], decodedFx[2]);
-    const test = ethers.utils.defaultAbiCoder.decode(['address', 'address', 'address', 'address', 'address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint8', 'bool', 'bool', 'bool'], decodedExecutor[3][0]);
-    console.log(test);
   });
 
   it("proposal payload should update the aave market", async function() {
     // Broken. Trying to figure out why reserves aren't being updated even though the transaction is successful.
-    await fxChild.connect(spoof).onStateReceive(ethers.BigNumber.from(1259388), ethers.utils.hexlify(fxData));
+    tx = await fxChild.connect(spoof).onStateReceive(ethers.BigNumber.from(1259388), ethers.utils.hexlify(fxData));
+    const receipt = await hre.network.provider.send("eth_getTransactionReceipt", [tx.hash]);
+    console.log("Receipt status", receipt.status);
     console.log(await lendingPool.getReserveData('0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7'));
   });
 });
