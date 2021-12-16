@@ -44,6 +44,7 @@ describe("Check Proposal", function() {
   });
 
   it("proposal payload should update the aave market", async function() {
+    // Broken. Trying to figure out why reserves aren't being updated even though the transaction is successful.
     await fxChild.connect(spoof).onStateReceive(ethers.BigNumber.from(1259388), ethers.utils.hexlify(fxData));
     console.log(await lendingPool.getReserveData('0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7'));
   });
