@@ -50,7 +50,7 @@ describe("Send Proposal", function() {
     let aaveGovernanceV2;
     let stateSender;
     const polygonBridgeExecutorAddress = '0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772';
-    const polygonAssetDeployerAddress = '0x6123fD450AaA6086c5e172657379E367B4301548';
+    const polygonAssetDeployerAddress = '0x0e78a732F80D462101Aea044CF55D714c6227d77';
     const polygonLendingPoolConfiguratorAddress = '0x26db2B833021583566323E3b8985999981b9F1F3';
     const shortExecutorAddress = '0xEE56e2B3D491590B5b31738cC34d5232F378a8D5';
     const fxRootAddress = '0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2';
@@ -60,38 +60,59 @@ describe("Send Proposal", function() {
     const variableDebtAddress = '0x1d22ae684f479d3da97ca19ffb03e6349d345f24';
     const aaveGovernanceV2Address = '0xEC568fffba86c094cf06b22134B23074DFE2252c';
     const stateSenderAddress = '0x28e4F3a7f651294B9564800b2D01f35189A5bFbE';
+    const treasuryAddress = '0x7734280A4337F37Fbf4651073Db7c28C80B339e9';
+    const incentivesControllerAddress = '0x357D51124f59836DeD84c8a1730D72B749d8BC23';
+    const ghstAddress = '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7'
+    const junkParams = '0x00'; //this is not used
+    /*
     const createAssetAbiParameters = [
-        'address', //token
-        'address', //aToken
+        'address', //atoken
         'address', //stableDebtToken
         'address', //variableDebtToken
+        'uint8', //underlying decimals
         'address', //interestStrategy
-        'uint256', //ltv
-        'uint256', //lt
-        'uint256', //lb
-        'uint256', //rf
-        'uint8', //decimals
-        'bool', //enableBorrow
-        'bool', //enableStableBorrow
-        'bool' //enableAsCollateral
-    ];
+        'address', //underlying asset
+        'address', //treasury
+        'address', //incentives controller
+        'string', //underlyingAssetName
+        'string', //aTokenName
+        'string', //aTokenSymbol
+        'string', //variableDebtTokenName
+        'string', //variableDebtTokenSymbol
+        'string', //stableDebtTokenName
+        'string', //stableDebtTokenSymbol
+        'bytes' //params
+    ];*/
+    const createAssetAbiParameters = [
+        "tuple(address,address,address,address,address,uint256,uint256,uint256,uint256,uint8,bool,bool,bool,string,string,string,string,string,string,string,bytes)"
+    ]
     
-    const ghstParameters = [
-        '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7',
+    const ghstParametersCreation = [[
+        ghstAddress,
         aTokenAddress,
         stableDebtAddress,
         variableDebtAddress,
         '0xBb480ae4e2cf28FBE80C9b61ab075f6e7C4dB468',
-        ethers.BigNumber.from('2500'),
-        ethers.BigNumber.from('4500'),
-        ethers.BigNumber.from('12500'),
-        ethers.BigNumber.from('2000'),
-        ethers.BigNumber.from('18'),
+        2500,
+        4500,
+        12500,
+        2000,
+        18,
         true,
         false,
-        true
-    ];
-    
+        true,
+        "GHST",
+        "Aave Matic Market GHST",
+        "amGHST",
+        "Aave Matic Market variable debt GHST",
+        "variableDebtmGHST",
+        "Aave Matic Market stable debt GHST",
+        "stableDebtmGHST",
+        junkParams,
+    ]];
+
+
+    /*
     const balParameters = [
         '0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3',
         aTokenAddress,
@@ -171,6 +192,7 @@ describe("Send Proposal", function() {
         false,
         true
     ];
+    */
 
 
     before(async function() {
@@ -207,21 +229,23 @@ describe("Send Proposal", function() {
         );
         stateSender = await StateSender.attach(stateSenderAddress);
     
-        function addAssetAction(parameters) {
-            const encodedArguments = ethers.utils.defaultAbiCoder.encode(createAssetAbiParameters, parameters);
+        function addAssetAction(creationParams) {
+            const encodedArguments = ethers.utils.defaultAbiCoder.encode(createAssetAbiParameters, creationParams);
             proposalActions.targets.push(polygonAssetDeployerAddress);
             proposalActions.values.push(ethers.BigNumber.from('0'));
-            proposalActions.signatures.push('execute(address,address,address,address,address,uint256,uint256,uint256,uint256,uint8,bool,bool,bool)');
+            proposalActions.signatures.push('execute(' + createAssetAbiParameters + ')');
             proposalActions.calldatas.push(encodedArguments);
             proposalActions.withDelegatecalls.push(true);
+
         }
-    
-        addAssetAction(ghstParameters);
+        
+        addAssetAction(ghstParametersCreation);/*
         addAssetAction(balParameters);
         addAssetAction(dpiParameters);
         addAssetAction(crvParameters);
         addAssetAction(sushiParameters);
-        addAssetAction(linkParameters);
+        addAssetAction(linkParameters);*/
+        
 
         /* Cannot test for this until ownership of oracle is transferred
         //Add oracles for all new assets
