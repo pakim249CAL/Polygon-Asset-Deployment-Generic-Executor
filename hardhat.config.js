@@ -48,12 +48,14 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      gas: 12000000,
+      gas: 60000000,
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
       forking: {
-        url: "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
-        blockNumber: 22579000,
+        url: "https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
+          //"https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
+        blockNumber: 13820000,
+        //22646545,
       },
     },
     local: {
