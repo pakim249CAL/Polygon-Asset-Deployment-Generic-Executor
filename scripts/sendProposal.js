@@ -331,7 +331,7 @@ async function main() {
     ['sendMessageToChild(address,bytes)'], 
     [proposalActions.encodedRootCalldata], 
     [false], 
-    '0xf7a1f565fcd7684fba6fea5d77c5e699653e21cb6ae25fbf8c5dbc8d694c7949' //TODO: replace with correct IPFS hash
+    'QmU6d86JLM9vEa3tBwu5as6mP7cLVFwK8piCj2UrZ51Psq' //TODO: replace with correct IPFS hash
   );
 
   const proposalId = await aaveGovernanceV2.getProposalsCount() - 1;
