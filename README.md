@@ -11,5 +11,7 @@ Output.txt is the bytes data from the StateSynced event of FxRoot which emulates
 
 TODO:
 1. Make the delegate call payload contract work so that the calldata size can be reduced
-2. Generalize the functions so that more assets can be added or edited easily later
+2. Generalize the functions so that more assets can be added or edited easily later and for better testing
 3. Add a test suite and script that conforms to aave's codebase
+
+AGPL
