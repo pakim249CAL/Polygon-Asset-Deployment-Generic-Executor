@@ -18,55 +18,51 @@ contract PolygonAssetListingProposalGenericExecutor is IProposalGenericExecutor 
   address public constant INCENTIVES_CONTROLLER_ADDRESS = 0x357D51124f59836DeD84c8a1730D72B749d8BC23;
   ILendingPoolAddressesProvider public constant LENDING_POOL_ADDRESSES_PROVIDER = 
     ILendingPoolAddressesProvider(0xd05e3E715d945B59290df0ae8eF85c1BdB684744);
+  string public constant ATOKEN_NAME_PREFIX = "Aave Matic Market ";
+  string public constant ATOKEN_SYMBOL_PREFIX = "am";
+  string public constant VAR_DEBT_NAME_PREFIX = "Aave Matic Market variable debt ";
+  string public constant VAR_DEBT_SYMBOL_PREFIX = "variableDebtm";
+  string public constant STABLE_DEBT_NAME_PREFIX = "Aave Matic Market stable debt ";
+  string public constant STABLE_DEBT_SYMBOL_PREFIX = "stableDebtm";
+  
   /**
    * @dev Payload execution function, called once a proposal passed in the Aave governance
    */
-  function execute(DeploymentParams calldata deploymentParams) external override {
+  function execute(
+    address aToken,
+    address stableDebt,
+    address variableDebt,
+    uint8 decimals,
+    address interestRateStrategy,
+    address underlyingAsset,
+    string calldata underlyingAssetName,
+    bytes calldata params
+    ) external override {
     ILendingPoolConfigurator LENDING_POOL_CONFIGURATOR =
       ILendingPoolConfigurator(LENDING_POOL_ADDRESSES_PROVIDER.getLendingPoolConfigurator());
 
     ILendingPoolConfigurator.InitReserveInput[] memory initReserveInput;
     initReserveInput[0] = 
       ILendingPoolConfigurator.InitReserveInput(
-        deploymentParams.aToken,
-        deploymentParams.stableDebtToken,
-        deploymentParams.variableDebtToken,
-        deploymentParams.decimals,
-        deploymentParams.interestRateStrategy,
-        deploymentParams.underlyingAsset,
+        aToken,
+        stableDebt,
+        variableDebt,
+        decimals,
+        interestRateStrategy,
+        underlyingAsset,
         TREASURY_ADDRESS,
         INCENTIVES_CONTROLLER_ADDRESS,
-        deploymentParams.underlyingAssetName,
-        deploymentParams.aTokenName,
-        deploymentParams.aTokenSymbol,
-        deploymentParams.variableDebtTokenName,
-        deploymentParams.variableDebtTokenSymbol,
-        deploymentParams.stableDebtTokenName,
-        deploymentParams.stableDebtTokenSymbol,
-        deploymentParams.params
+        underlyingAssetName,
+        string(abi.encodePacked(ATOKEN_NAME_PREFIX, underlyingAssetName)),
+        string(abi.encodePacked(ATOKEN_SYMBOL_PREFIX, underlyingAssetName)),
+        string(abi.encodePacked(VAR_DEBT_NAME_PREFIX, underlyingAssetName)),
+        string(abi.encodePacked(VAR_DEBT_SYMBOL_PREFIX, underlyingAssetName)),
+        string(abi.encodePacked(STABLE_DEBT_NAME_PREFIX, underlyingAssetName)),
+        string(abi.encodePacked(STABLE_DEBT_SYMBOL_PREFIX, underlyingAssetName)),
+        params
       );
-
 
     LENDING_POOL_CONFIGURATOR.batchInitReserve(initReserveInput);
-
-    if (deploymentParams.enableBorrow) {
-      LENDING_POOL_CONFIGURATOR.enableBorrowingOnReserve(
-        deploymentParams.underlyingAsset, 
-        deploymentParams.enableStableBorrow);
-    }
-
-    LENDING_POOL_CONFIGURATOR.setReserveFactor(
-      deploymentParams.underlyingAsset, 
-      deploymentParams.reserveFactor);
-
-    if (deploymentParams.enableAsCollateral) {
-      LENDING_POOL_CONFIGURATOR.configureReserveAsCollateral(
-        deploymentParams.underlyingAsset,
-        deploymentParams.ltv,
-        deploymentParams.liquidationThreshold,
-        deploymentParams.liquidationBonus
-      );
-    }
 
     emit ProposalExecuted();
   }
