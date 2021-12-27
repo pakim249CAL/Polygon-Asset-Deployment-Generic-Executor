@@ -3,7 +3,11 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+import * as hre from "hardhat";
+import { ethers } from "hardhat";
+import "@nomiclabs/hardhat-ethers"
+import "@nomiclabs/hardhat-waffle";
+import "hardhat-gas-reporter";
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -14,22 +18,22 @@ async function main() {
   // await hre.run('compile');
 
 
-  const PolygonAssetListingProposalGenericExecutor = await hre.ethers.getContractFactory(
-    "PolygonAssetListingProposalGenericExecutor"
+  const ProposalDataProvider = await hre.ethers.getContractFactory(
+    "ProposalDataProvider"
   );
-  const polygonAssetListingProposalGenericExecutor = await PolygonAssetListingProposalGenericExecutor.deploy();
-  await polygonAssetListingProposalGenericExecutor.deployed();
-  console.log("Executor deployed to:", polygonAssetListingProposalGenericExecutor.address);
+  const proposalDataProvider = await ProposalDataProvider.deploy();
+  await proposalDataProvider.deployed();
+  console.log("Data Provider deployed to:", proposalDataProvider.address);
 
   await sleep(60000);
   await hre.run("verify:verify", {
-    address: polygonAssetListingProposalGenericExecutor.address,
+    address: proposalDataProvider.address,
     constructorArguments: [],
   });
   
 }
 
-function sleep(ms) {
+function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 // We recommend this pattern to be able to use async/await everywhere

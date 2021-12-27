@@ -53,10 +53,10 @@ export default {
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
       forking: {
-        url: //"https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
-          "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
-        blockNumber: //13820000,
-        22757766,
+        url: "https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
+          //"https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
+        blockNumber: 13820000,
+        //23030985,
       },
     },
     local: {
@@ -75,8 +75,11 @@ export default {
     }
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
+    enabled: true,
+    currency: 'USD',
+    gasPrice: 55,
+    coinmarketcap: "71a0e4d4-2872-4441-8dda-97464b6d5e55",
+    token: 'ETH'
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,

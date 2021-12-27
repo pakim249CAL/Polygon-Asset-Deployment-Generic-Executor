@@ -4,6 +4,7 @@ import {
   ProposalParams,
   ProposalActions,
   InitiateReservePayload,
+  InitiateReserveDelegateCallPayload,
   ReserveFactorPayload,
   ConfigureReservePayload,
   EnableBorrowPayload,
@@ -57,6 +58,44 @@ export function pushInitReserveParams(
       "variableDebtm" + name,
       "Aave Matic Market stable debt " + name,
       "stableDebtm" + name,
+      params
+    )
+  );
+  return proposalPayloads;
+}
+
+export function pushInitReserveParamsDelegateCall(
+  proposalPayloads: ProposalPayloads,
+  underlying: string, 
+  interestRateStrategy: string, 
+  name: string, 
+  ltv: BigNumber,
+  lt: BigNumber,
+  lb: BigNumber,
+  rf: BigNumber,
+  borrowEnabled: Boolean = false,
+  stableBorrowEnabled: Boolean = false,
+  aToken: string = aTokenAddress, 
+  stableDebt: string = stableDebtAddress,
+  variableDebt: string = variableDebtAddress,
+  params: string = '0x10', //AFAIK this is unused
+  decimals: BigNumber = BigNumber.from('18'), 
+) {
+  proposalPayloads.initReserveDelegateCall.push(
+    new InitiateReserveDelegateCallPayload(
+      underlying,
+      aToken,
+      stableDebt,
+      variableDebt,
+      interestRateStrategy,
+      ltv,
+      lt,
+      lb,
+      rf,
+      decimals,
+      borrowEnabled,
+      stableBorrowEnabled,
+      name,
       params
     )
   );
@@ -129,6 +168,7 @@ export function addAction(
   proposalActions.withDelegatecalls.push(delegateCall);
   return proposalActions;
 }
+
 
 export function addBorrowAction(proposalActions: ProposalActions, payload: any) {
   return addAction(
@@ -213,7 +253,42 @@ export function decodeExecutorData(decodedFxData: any) {
     decodedFxData);
 }
 
-export function fillPolygonProposalActions() {
+export function fillPolygonProposalActionsDelegateCall(executorAddress: string) {
+  let proposalActions = new ProposalActions();
+  let proposalPayloads = new ProposalPayloads();
+  
+  proposalActions = addAction(
+    proposalActions,
+    executorAddress,
+    [],
+    "execute()",
+    [],
+    true
+  );
+  proposalPayloads = pushConfigureReserveParams(
+    proposalPayloads,
+    maticParams.underlying,
+    maticParams.ltv,
+    maticParams.lt,
+    maticParams.lb
+  );
+  for(let i = 0; i < proposalPayloads.configReserve.length; i++) {
+    proposalActions = addConfigureReserveAction(
+      proposalActions, 
+      proposalPayloads.configReserve[i].payload
+    );
+  }
+  
+  //Encoding
+  proposalActions.encodedActions = encodeActions(proposalActions);
+  proposalActions.encodedRootCalldata = encodeRootCalldata(proposalActions.encodedActions);
+  proposalActions.stateSenderData = emulateFxRootEncodedCalldata(proposalActions.encodedActions);
+  proposalActions.decodedFxData = decodeFxRootEncodedCalldata(proposalActions.stateSenderData);
+  proposalActions.decodedExecutorData = decodeExecutorData(proposalActions.decodedFxData[2]);
+  return proposalActions;
+}
+
+export function fillPolygonProposalActions(delegateCall: Boolean = false) {
   let proposalActions = new ProposalActions();
   let proposalPayloads = new ProposalPayloads();
   let proposalParams: ProposalParams[] = 

@@ -3,14 +3,18 @@ pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 interface IProposalGenericExecutor {
-
-  function execute(
-    address aToken,
-    address stableDebt,
-    address variableDebt,
-    uint8 decimals,
-    address interestRateStrategy,
-    address underlyingAsset,
-    string calldata underlyingAssetName,
-    bytes calldata params) external;
+  struct ProposalPayload {
+    address underlyingAsset;
+    address interestRateStrategy;
+    address oracle;
+    uint256 ltv;
+    uint256 lt;
+    uint256 lb;
+    uint256 rf;
+    uint8 decimals;
+    bool borrowEnabled;
+    bool stableBorrowEnabled;
+    string underlyingAssetName;
+  }
+  function execute() external;
 }

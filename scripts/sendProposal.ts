@@ -7,7 +7,8 @@ import {
   aaveGovernanceV2Address,
 } from "../helpers/types";
 import {
-  fillPolygonProposalActions
+  fillPolygonProposalActions,
+  fillPolygonProposalActionsDelegateCall
 } from "../helpers/helpers";
 
 
@@ -23,7 +24,7 @@ async function main() {
   //Set to the correct signer.
   const signer = await hre.ethers.getSigner("0x26a78D5b6d7a7acEEDD1e6eE3229b372A624d8b7");
 
-  let proposalActions = fillPolygonProposalActions();
+  let proposalActions = fillPolygonProposalActionsDelegateCall('0x2CE7f32755181f32bAfB65286aedB24fdd723E75');
   let aaveGovernanceV2;
 
   await fs.writeFile('FxData.txt', proposalActions.stateSenderData, (err) => {

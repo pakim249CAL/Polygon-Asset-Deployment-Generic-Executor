@@ -81,7 +81,7 @@ export const balParams: ProposalParams = new ProposalParams(
   '0x03CD157746c61F44597dD54C6f6702105258C722',
   'BAL',
   BigNumber.from('2000'),
-  BigNumber.from('2500'),
+  BigNumber.from('2000'),
   BigNumber.from('4500'),
   BigNumber.from('11000'),
   true,
@@ -97,7 +97,7 @@ export const dpiParams: ProposalParams = new ProposalParams(
   '0xC70aAF9092De3a4E5000956E672cDf5E996B4610',
   'DPI',
   BigNumber.from('2000'),
-  BigNumber.from('2500'),
+  BigNumber.from('2000'),
   BigNumber.from('4500'),
   BigNumber.from('11000'),
   false,
@@ -113,7 +113,7 @@ export const crvParams: ProposalParams = new ProposalParams(
   '0x1CF68C76803c9A415bE301f50E82e44c64B7F1D4',
   'CRV',
   BigNumber.from('2000'),
-  BigNumber.from('2500'),
+  BigNumber.from('2000'),
   BigNumber.from('4500'),
   BigNumber.from('11000'),
   true,
@@ -129,7 +129,7 @@ export const sushiParams: ProposalParams = new ProposalParams(
   '0x17414Eb5159A082e8d41D243C1601c2944401431',
   'SUSHI',
   BigNumber.from('3500'),
-  BigNumber.from('2500'),
+  BigNumber.from('2000'),
   BigNumber.from('4500'),
   BigNumber.from('11000'),
   false,
@@ -285,6 +285,73 @@ export class InitiateReservePayload {
   }
 }
 
+export class InitiateReserveDelegateCallPayload {
+  underlying: string;
+  aToken: string;
+  stableDebt: string;
+  variableDebt: string;
+  interestRateStrategy: string;
+  ltv: BigNumber;
+  lt: BigNumber;
+  lb: BigNumber;
+  rf: BigNumber;
+  decimals: BigNumber;
+  borrowEnabled: Boolean;
+  stableBorrowEnabled: Boolean;
+  name: string;
+  params: string;
+
+  constructor(
+    underlying: string = '',
+    aToken: string = '',
+    stableDebt: string = '',
+    variableDebt: string = '',
+    interestRateStrategy: string = '',
+    ltv: BigNumber = BigNumber.from(0),
+    lt: BigNumber = BigNumber.from(0),
+    lb: BigNumber = BigNumber.from(0),
+    rf: BigNumber = BigNumber.from(0),
+    decimals: BigNumber = BigNumber.from(18),
+    borrowEnabled: Boolean = false,
+    stableBorrowEnabled: Boolean = false,
+    name: string = '',
+    params: string = ''
+  ) {
+    this.underlying = underlying;
+    this.aToken = aToken;
+    this.stableDebt = stableDebt;
+    this.variableDebt = variableDebt;
+    this.interestRateStrategy = interestRateStrategy;
+    this.ltv = ltv;
+    this.lt = lt;
+    this.lb = lb;
+    this.rf = rf;
+    this.decimals = decimals;
+    this.borrowEnabled = borrowEnabled;
+    this.stableBorrowEnabled = stableBorrowEnabled;
+    this.name = name;
+    this.params = params;
+  }
+  get payload() {
+    return [
+      this.underlying,
+      this.aToken,
+      this.stableDebt,
+      this.variableDebt,
+      this.interestRateStrategy,
+      this.ltv,
+      this.lt,
+      this.lb,
+      this.rf,
+      this.decimals,
+      this.borrowEnabled,
+      this.stableBorrowEnabled,
+      this.name,
+      this.params
+    ];
+  }
+}
+
 export class OraclePayload {
   assets: string[];
   sources: string[];
@@ -358,6 +425,7 @@ export class EnableBorrowPayload {
 
 export class ProposalPayloads {
   initReserve: InitiateReservePayload[];
+  initReserveDelegateCall: InitiateReserveDelegateCallPayload[];
   reserveFactor: ReserveFactorPayload[];
   configReserve: ConfigureReservePayload[];
   borrow: EnableBorrowPayload[];
@@ -365,6 +433,7 @@ export class ProposalPayloads {
 
   constructor() {
     this.initReserve = [];
+    this.initReserveDelegateCall = [];
     this.reserveFactor = [];
     this.configReserve = [];
     this.borrow = [];
@@ -373,5 +442,8 @@ export class ProposalPayloads {
 
   get initReservePayload() {
     return [Array.from(this.initReserve, x => x.payload)];
+  }
+  get initReserveDelegateCallPayload() {
+    return [Array.from(this.initReserveDelegateCall, x => x.payload)];
   }
 }
