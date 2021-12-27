@@ -18,6 +18,7 @@ import {
   treasuryAddress,
   incentivesControllerAddress,
   oracleAddress,
+  deployerAddress,
   ghstParams,
   balParams,
   dpiParams,
@@ -253,7 +254,7 @@ export function decodeExecutorData(decodedFxData: any) {
     decodedFxData);
 }
 
-export function fillPolygonProposalActionsDelegateCall(executorAddress: string) {
+export function fillPolygonProposalActionsDelegateCall(executorAddress: string = deployerAddress) {
   let proposalActions = new ProposalActions();
   let proposalPayloads = new ProposalPayloads();
   
@@ -265,19 +266,6 @@ export function fillPolygonProposalActionsDelegateCall(executorAddress: string) 
     [],
     true
   );
-  proposalPayloads = pushConfigureReserveParams(
-    proposalPayloads,
-    maticParams.underlying,
-    maticParams.ltv,
-    maticParams.lt,
-    maticParams.lb
-  );
-  for(let i = 0; i < proposalPayloads.configReserve.length; i++) {
-    proposalActions = addConfigureReserveAction(
-      proposalActions, 
-      proposalPayloads.configReserve[i].payload
-    );
-  }
   
   //Encoding
   proposalActions.encodedActions = encodeActions(proposalActions);

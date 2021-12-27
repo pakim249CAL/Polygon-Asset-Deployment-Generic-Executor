@@ -11,6 +11,7 @@ export const variableDebtAddress = '0x1d22ae684f479d3da97ca19ffb03e6349d345f24';
 export const aaveGovernanceV2Address = '0xEC568fffba86c094cf06b22134B23074DFE2252c';
 export const treasuryAddress = '0x7734280A4337F37Fbf4651073Db7c28C80B339e9';
 export const incentivesControllerAddress = '0x357D51124f59836DeD84c8a1730D72B749d8BC23';
+export const deployerAddress = '0x2771204c7B544eD4b8b37206bf40F1ED643f8789';
 
 export class ProposalParams {
   underlying: string;
@@ -156,7 +157,7 @@ export const linkParams: ProposalParams = new ProposalParams(
 );
 
 export const maticParams: ProposalParams = new ProposalParams(
-  '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+  '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
   '',
   '',
   'WMATIC',

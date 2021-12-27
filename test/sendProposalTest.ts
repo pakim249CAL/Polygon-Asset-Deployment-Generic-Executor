@@ -25,7 +25,7 @@ describe("Proposal Test", function () {
   let whale2: Signer;
   let whale3: Signer;
   let whale4: Signer;
-  let proposalActions = fillPolygonProposalActionsDelegateCall('0x2CE7f32755181f32bAfB65286aedB24fdd723E75');
+  let proposalActions = fillPolygonProposalActionsDelegateCall();
   let aaveGovernanceV2: any;
 
   before(async function() {
