@@ -16,9 +16,6 @@ import {
   sushiParams,
   linkParams,
   maticParams,
-  aTokenAddress,
-  variableDebtAddress,
-  stableDebtAddress
 } from "../helpers/types";
 import {
   fillPolygonProposalActions
