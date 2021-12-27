@@ -9,24 +9,11 @@ import "hardhat-gas-reporter";
 
 import { 
   ProposalStates,
-  ProposalActions,
-  ConfigureReservePayload,
-  ProposalPayloads,
-  polygonLendingPoolConfiguratorAddress,
   shortExecutorAddress,
   fxRootAddress,
-  oracleAddress,
   aaveGovernanceV2Address,
 } from "../helpers/types";
 import {
-  pushInitReserveParams,
-  addAction,
-  addBorrowAction,
-  addReserveFactorAction,
-  addConfigureReserveAction,
-  encodeActions,
-  encodeRootCalldata,
-  emulateFxRootEncodedCalldata,
   fillPolygonProposalActions
 } from "../helpers/helpers";
 

@@ -9,6 +9,16 @@ import "hardhat-gas-reporter";
 import { 
   polygonBridgeExecutorAddress,
   oracleAddress,
+  ghstParams,
+  balParams,
+  dpiParams,
+  crvParams,
+  sushiParams,
+  linkParams,
+  maticParams,
+  aTokenAddress,
+  variableDebtAddress,
+  stableDebtAddress
 } from "../helpers/types";
 import {
   fillPolygonProposalActions
@@ -23,6 +33,8 @@ describe("Proposal Check", function() {
   let fxChild: Contract;
   let lendingPool: Contract;
   let aaveOracle: Contract;
+  let dataProvider: Contract;
+  let proposalParams = [ghstParams, balParams, dpiParams, crvParams, sushiParams, linkParams, maticParams];
   let polygonBridgeExecutor: Contract;
   let proposalActions = fillPolygonProposalActions();
 
@@ -54,18 +66,18 @@ describe("Proposal Check", function() {
     const PolygonBridgeExecutor = await hre.ethers.getContractFactory(
       "PolygonBridgeExecutor"
     );
-    aaveOracle = await hre.ethers.getContractAt("IOwnable", oracleAddress);
+    aaveOracle = await hre.ethers.getContractAt("IAaveOracle", oracleAddress);
     // At time of testing, ownership of oracle to the bridge has not been done.
     await aaveOracle.connect(multisig).transferOwnership(polygonBridgeExecutorAddress);
-    expect(await aaveOracle.owner()).to.equal(polygonBridgeExecutorAddress);
 
     fxChild = await FxChild.attach("0x8397259c983751DAf40400790063935a11afa28a");
     polygonBridgeExecutor = await PolygonBridgeExecutor.attach(polygonBridgeExecutorAddress);
     lendingPool = await hre.ethers.getContractAt("ILendingPool", "0x8dFf5E27EA6b7AC08EbFdf9eB090F32ee9a30fcf");
+    dataProvider = await hre.ethers.getContractAt("IAaveProtocolDataProvider", "0x7551b5D2763519d4e37e8B81929D336De671d46d");
   });
 
-  it("proposal payload should update the aave market", async function() {
-    console.log(proposalActions.decodedExecutorData)
+  it("proposal payload should update the aave market and oracles", async function() {
+    expect(await aaveOracle.owner()).to.equal(polygonBridgeExecutorAddress);
     let sendStatetx = await fxChild.connect(spoof).onStateReceive(
       ethers.BigNumber.from(1259388), 
       ethers.utils.hexlify(proposalActions.stateSenderData));
@@ -74,12 +86,35 @@ describe("Proposal Check", function() {
     await polygonBridgeExecutor.execute(
       await polygonBridgeExecutor.getActionsSetCount() - 1
     );
-    console.log(await lendingPool.getReserveData("0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7"));
-    console.log(await lendingPool.getReserveData("0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3"));
-    console.log(await lendingPool.getReserveData("0x85955046df4668e1dd369d2de9f3aeb98dd2a369"));
-    console.log(await lendingPool.getReserveData("0x172370d5cd63279efa6d502dab29171933a610af"));
-    console.log(await lendingPool.getReserveData("0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a"));
-    console.log(await lendingPool.getConfiguration("0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39"));
-    console.log(await lendingPool.getConfiguration("0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"));
+    for(let i = 0; i < proposalParams.length; i++) {
+      const reserveConfig = await dataProvider.getReserveConfigurationData(proposalParams[i].underlying);
+      //Check if reserves are initiated with tokens and market is active
+      const reserveData = await lendingPool.getReserveData(proposalParams[i].underlying);
+      if(proposalParams[i].initReserve) {
+        expect(reserveData.interestRateStrategyAddress).to.equal(proposalParams[i].interestRateStrategy);
+        expect(reserveConfig.isActive).to.equal(true);
+      }
+      //Check if borrow is enabled and disabled correctly
+      if(proposalParams[i].borrow || proposalParams[i].name == "WMATIC") {
+        expect(reserveConfig.borrowingEnabled).to.equal(true);
+      }
+      else {
+        expect(reserveConfig.borrowingEnabled).to.equal(false);
+      }
+      //Check if reserve factor is updated
+      if(proposalParams[i].updateReserveFactor) {
+        expect(reserveConfig.reserveFactor).to.equal(proposalParams[i].reserveFactor);
+      }
+      //Check if reserve configurations are updated
+      if(proposalParams[i].updateReserveConfiguration) {
+        expect(reserveConfig.ltv).to.equal(proposalParams[i].ltv);
+        expect(reserveConfig.liquidationThreshold).to.equal(proposalParams[i].lt);
+        expect(reserveConfig.liquidationBonus).to.equal(proposalParams[i].lb);
+      }
+      //Check if oracles have been changed correctly
+      if(proposalParams[i].updateOracle) {
+        expect(await aaveOracle.getSourceOfAsset(proposalParams[i].underlying)).to.equal(proposalParams[i].oracleSource);
+      }
+    }
   });
 });

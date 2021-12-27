@@ -1,6 +1,7 @@
 import { BigNumber } from "ethers";
 import * as ethers from "ethers";
 import { 
+  ProposalParams,
   ProposalActions,
   InitiateReservePayload,
   ReserveFactorPayload,
@@ -16,26 +17,20 @@ import {
   treasuryAddress,
   incentivesControllerAddress,
   oracleAddress,
-  ghstAddress,
-  balAddress,
-  dpiAddress,
-  crvAddress,
-  sushiAddress,
-  linkAddress,
-  maticAddress
+  ghstParams,
+  balParams,
+  dpiParams,
+  crvParams,
+  sushiParams,
+  linkParams,
+  maticParams,
 } from "../helpers/types";
 
 export function pushInitReserveParams(
   proposalPayloads: ProposalPayloads,
   underlying: string, 
   interestRateStrategy: string, 
-  oracleSource: string,
   name: string, 
-  reserveFactor: BigNumber,
-  ltv: BigNumber,
-  lt: BigNumber,
-  lb: BigNumber,
-  borrow: Boolean,
   aToken: string = aTokenAddress, 
   stableDebt: string = stableDebtAddress,
   variableDebt: string = variableDebtAddress,
@@ -65,18 +60,50 @@ export function pushInitReserveParams(
       params
     )
   );
-  if (borrow) {
-    proposalPayloads.borrow.push(
-      new EnableBorrowPayload(underlying, false)
-    )
-  }
+  return proposalPayloads;
+}
+
+export function pushBorrowParams(
+  proposalPayloads: ProposalPayloads,
+  underlying: string, 
+  borrow: Boolean,
+  ) 
+{
+  proposalPayloads.borrow.push(
+    new EnableBorrowPayload(underlying, borrow)
+  );
+  return proposalPayloads;
+}
+
+export function pushReserveFactorParams(
+  proposalPayloads: ProposalPayloads,
+  underlying: string,
+  reserveFactor: BigNumber,
+) {
   proposalPayloads.reserveFactor.push(
     new ReserveFactorPayload(underlying, reserveFactor)
   );
+  return proposalPayloads;
+}
+
+export function pushConfigureReserveParams(
+  proposalPayloads: ProposalPayloads,
+  underlying: string,
+  ltv: BigNumber,
+  lt: BigNumber,
+  lb: BigNumber,
+) {
   proposalPayloads.configReserve.push(
     new ConfigureReservePayload(underlying, ltv, lt, lb)
   );
+  return proposalPayloads;
+}
 
+export function pushOracleParams(
+  proposalPayloads: ProposalPayloads,
+  underlying: string,
+  oracleSource: string,
+) {
   proposalPayloads.oracle.assets.push(underlying);
   proposalPayloads.oracle.sources.push(oracleSource);
   return proposalPayloads;
@@ -85,7 +112,7 @@ export function pushInitReserveParams(
 export function addAction(
   proposalActions: ProposalActions,
   target: string,
-  abi: string, 
+  abi: string[], 
   signature: string,
   params: any,
   delegateCall: boolean = false,
@@ -93,7 +120,7 @@ export function addAction(
 ) 
 {
   let encodedArguments = ethers.utils.defaultAbiCoder.encode(
-    [abi], [params]
+    abi, params
   );
   proposalActions.targets.push(target);
   proposalActions.values.push(value);
@@ -107,7 +134,7 @@ export function addBorrowAction(proposalActions: ProposalActions, payload: any) 
   return addAction(
     proposalActions,
     polygonLendingPoolConfiguratorAddress,
-    "(address,bool)",
+    ['address', 'bool'],
     "enableBorrowingOnReserve(address,bool)",
     payload
   );
@@ -117,7 +144,7 @@ export function addReserveFactorAction(proposalActions: ProposalActions, payload
   return addAction(
     proposalActions,
     polygonLendingPoolConfiguratorAddress,
-    "(address,uint256)",
+    ['address', 'uint256'],
     "setReserveFactor(address,uint256)",
     payload
   );
@@ -127,8 +154,18 @@ export function addConfigureReserveAction(proposalActions: ProposalActions, payl
   return addAction(
     proposalActions,
     polygonLendingPoolConfiguratorAddress,
-    "(address,uint256,uint256,uint256)",
+    ['address', 'uint256', 'uint256', 'uint256'],
     "configureReserveAsCollateral(address,uint256,uint256,uint256)",
+    payload
+  );
+}
+
+export function addOracleAction(proposalActions: ProposalActions, payload: any) {
+  return addAction(
+    proposalActions,
+    oracleAddress,
+    ["address[]", "address[]"],
+    "setAssetSources(address[],address[])",
     payload
   );
 }
@@ -179,99 +216,55 @@ export function decodeExecutorData(decodedFxData: any) {
 export function fillPolygonProposalActions() {
   let proposalActions = new ProposalActions();
   let proposalPayloads = new ProposalPayloads();
+  let proposalParams: ProposalParams[] = 
+    [ghstParams, balParams, dpiParams, crvParams, sushiParams, linkParams, maticParams];
   
-  proposalPayloads = pushInitReserveParams(
-    proposalPayloads,
-    ghstAddress,
-    '0xBb480ae4e2cf28FBE80C9b61ab075f6e7C4dB468',
-    '0xe638249AF9642CdA55A92245525268482eE4C67b',
-    'GHST',
-    BigNumber.from('2000'),
-    BigNumber.from('2500'),
-    BigNumber.from('4500'),
-    BigNumber.from('11250'),
-    true
-  );
-
-  proposalPayloads = pushInitReserveParams(
-    proposalPayloads,
-    balAddress,
-    '0x9025C2d672afA29f43cB59b3035CaCfC401F5D62',
-    '0x03CD157746c61F44597dD54C6f6702105258C722',
-    'BAL',
-    BigNumber.from('2000'),
-    BigNumber.from('2500'),
-    BigNumber.from('4500'),
-    BigNumber.from('11000'),
-    true
-  );
-
-  proposalPayloads = pushInitReserveParams(
-    proposalPayloads,
-    dpiAddress,
-    '0x6405F880E431403588e92b241Ca15603047ef8a4',
-    '0xC70aAF9092De3a4E5000956E672cDf5E996B4610',
-    'DPI',
-    BigNumber.from('2000'),
-    BigNumber.from('2500'),
-    BigNumber.from('4500'),
-    BigNumber.from('11000'),
-    false
-  );
-
-  proposalPayloads = pushInitReserveParams(
-    proposalPayloads,
-    crvAddress,
-    '0xBD67eB7e00f43DAe9e3d51f7d509d4730Fe5988e',
-    '0x1CF68C76803c9A415bE301f50E82e44c64B7F1D4',
-    'CRV',
-    BigNumber.from('2000'),
-    BigNumber.from('2500'),
-    BigNumber.from('4500'),
-    BigNumber.from('11000'),
-    true
-  );
-
-  proposalPayloads = pushInitReserveParams(
-    proposalPayloads,
-    sushiAddress,
-    '0x835699Bf98f6a7fDe5713c42c118Fb80fA059737',
-    '0x17414Eb5159A082e8d41D243C1601c2944401431',
-    'SUSHI',
-    BigNumber.from('3500'),
-    BigNumber.from('2500'),
-    BigNumber.from('4500'),
-    BigNumber.from('11000'),
-    false
-  );
-
-  proposalPayloads = pushInitReserveParams(
-    proposalPayloads,
-    linkAddress,
-    '0x5641Bb58f4a92188A6F16eE79C8886Cf42C561d3',
-    '0xb77fa460604b9C6435A235D057F7D319AC83cb53',
-    'LINK',
-    BigNumber.from('1000'),
-    BigNumber.from('6500'),
-    BigNumber.from('7000'),
-    BigNumber.from('11000'),
-    true
-  );
-
-  proposalPayloads.configReserve.push(
-    new ConfigureReservePayload(
-      maticAddress,
-      BigNumber.from('6500'),
-      BigNumber.from('7000'),
-      BigNumber.from('11000')
-    )
-  );
+  for (let i = 0; i < proposalParams.length; i++) {
+    if (proposalParams[i].initReserve) {
+      proposalPayloads = pushInitReserveParams(
+        proposalPayloads,
+        proposalParams[i].underlying,
+        proposalParams[i].interestRateStrategy,
+        proposalParams[i].name,
+      );
+    }
+    if (proposalParams[i].borrow) {
+      proposalPayloads = pushBorrowParams(
+        proposalPayloads,
+        proposalParams[i].underlying,
+        false
+      );
+    }
+    if (proposalParams[i].updateReserveFactor) {
+      proposalPayloads = pushReserveFactorParams(
+        proposalPayloads,
+        proposalParams[i].underlying,
+        proposalParams[i].reserveFactor
+      );
+    }
+    if (proposalParams[i].updateReserveConfiguration) {
+      proposalPayloads = pushConfigureReserveParams(
+        proposalPayloads,
+        proposalParams[i].underlying,
+        proposalParams[i].ltv,
+        proposalParams[i].lt,
+        proposalParams[i].lb
+      );
+    }
+    if (proposalParams[i].updateOracle) {
+      proposalPayloads = pushOracleParams(
+        proposalPayloads,
+        proposalParams[i].underlying,
+        proposalParams[i].oracleSource
+      );
+    }
+  }
 
   
   proposalActions = addAction(
     proposalActions,
     polygonLendingPoolConfiguratorAddress,
-    "(address,address,address,uint8,address,address,address,address,string,string,string,string,string,string,string,bytes)[]",
+    ['(address,address,address,uint8,address,address,address,address,string,string,string,string,string,string,string,bytes)[]'],
     "batchInitReserve((address,address,address,uint8,address,address,address,address,string,string,string,string,string,string,string,bytes)[])",
     proposalPayloads.initReservePayload
   );
@@ -291,14 +284,9 @@ export function fillPolygonProposalActions() {
       proposalPayloads.configReserve[i].payload);
   }
   //broken
-  /*console.log(proposalPayloads.oracle.payload);
-  proposalActions = addAction(
+  proposalActions = addOracleAction(
     proposalActions,
-    oracleAddress,
-    "(address[],address[])",
-    "setAssetSources(address[],address[])",
-    proposalPayloads.oracle.payload
-  );*/
+    proposalPayloads.oracle.payload);
   
   //Encoding
   proposalActions.encodedActions = encodeActions(proposalActions);

@@ -12,13 +12,165 @@ export const aaveGovernanceV2Address = '0xEC568fffba86c094cf06b22134B23074DFE225
 export const treasuryAddress = '0x7734280A4337F37Fbf4651073Db7c28C80B339e9';
 export const incentivesControllerAddress = '0x357D51124f59836DeD84c8a1730D72B749d8BC23';
 
-export const ghstAddress = '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7'
-export const balAddress = '0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3'
-export const dpiAddress = '0x85955046df4668e1dd369d2de9f3aeb98dd2a369';
-export const crvAddress = '0x172370d5cd63279efa6d502dab29171933a610af';
-export const sushiAddress = '0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a';
-export const linkAddress = '0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39';
-export const maticAddress = '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270';
+export class ProposalParams {
+  underlying: string;
+  interestRateStrategy: string;
+  oracleSource: string;
+  name: string;
+  reserveFactor: BigNumber;
+  ltv: BigNumber;
+  lt: BigNumber;
+  lb: BigNumber;
+  borrow: Boolean;
+  initReserve: Boolean;
+  updateOracle: Boolean;
+  updateReserveFactor: Boolean;
+  updateReserveConfiguration: Boolean;
+
+  constructor(
+    underlying: string,
+    interestRateStrategy: string,
+    oracleSource: string,
+    name: string,
+    reserveFactor: BigNumber,
+    ltv: BigNumber,
+    lt: BigNumber,
+    lb: BigNumber,
+    borrow: Boolean,
+    initReserve: Boolean = false,
+    updateOracle: Boolean = false,
+    updateReserveFactor: Boolean = false,
+    updateReserveConfiguration: Boolean = false,
+  ) {
+    this.underlying = underlying;
+    this.interestRateStrategy = interestRateStrategy;
+    this.oracleSource = oracleSource;
+    this.name = name;
+    this.reserveFactor = reserveFactor;
+    this.ltv = ltv;
+    this.lt = lt;
+    this.lb = lb;
+    this.borrow = borrow;
+    this.initReserve = initReserve;
+    this.updateOracle = updateOracle;
+    this.updateReserveFactor = updateReserveFactor;
+    this.updateReserveConfiguration = updateReserveConfiguration;
+
+  }
+}
+
+export const ghstParams: ProposalParams = new ProposalParams(
+  '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7',
+  '0xBb480ae4e2cf28FBE80C9b61ab075f6e7C4dB468',
+  '0xe638249AF9642CdA55A92245525268482eE4C67b',
+  'GHST',
+  BigNumber.from('2000'),
+  BigNumber.from('2500'),
+  BigNumber.from('4500'),
+  BigNumber.from('11250'),
+  true,
+  true,
+  true,
+  true,
+  true
+);
+
+export const balParams: ProposalParams = new ProposalParams(
+  '0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3',
+  '0x9025C2d672afA29f43cB59b3035CaCfC401F5D62',
+  '0x03CD157746c61F44597dD54C6f6702105258C722',
+  'BAL',
+  BigNumber.from('2000'),
+  BigNumber.from('2500'),
+  BigNumber.from('4500'),
+  BigNumber.from('11000'),
+  true,
+  true,
+  true,
+  true,
+  true
+);
+
+export const dpiParams: ProposalParams = new ProposalParams(
+  '0x85955046df4668e1dd369d2de9f3aeb98dd2a369',
+  '0x6405F880E431403588e92b241Ca15603047ef8a4',
+  '0xC70aAF9092De3a4E5000956E672cDf5E996B4610',
+  'DPI',
+  BigNumber.from('2000'),
+  BigNumber.from('2500'),
+  BigNumber.from('4500'),
+  BigNumber.from('11000'),
+  false,
+  true,
+  true,
+  true,
+  true
+);
+
+export const crvParams: ProposalParams = new ProposalParams(
+  '0x172370d5cd63279efa6d502dab29171933a610af',
+  '0xBD67eB7e00f43DAe9e3d51f7d509d4730Fe5988e',
+  '0x1CF68C76803c9A415bE301f50E82e44c64B7F1D4',
+  'CRV',
+  BigNumber.from('2000'),
+  BigNumber.from('2500'),
+  BigNumber.from('4500'),
+  BigNumber.from('11000'),
+  true,
+  true,
+  true,
+  true,
+  true
+);
+
+export const sushiParams: ProposalParams = new ProposalParams(
+  '0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a',
+  '0x835699Bf98f6a7fDe5713c42c118Fb80fA059737',
+  '0x17414Eb5159A082e8d41D243C1601c2944401431',
+  'SUSHI',
+  BigNumber.from('3500'),
+  BigNumber.from('2500'),
+  BigNumber.from('4500'),
+  BigNumber.from('11000'),
+  false,
+  true,
+  true,
+  true,
+  true
+);
+
+export const linkParams: ProposalParams = new ProposalParams(
+  '0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39',
+  '0x5641Bb58f4a92188A6F16eE79C8886Cf42C561d3',
+  '0xb77fa460604b9C6435A235D057F7D319AC83cb53',
+  'LINK',
+  BigNumber.from('1000'),
+  BigNumber.from('6500'),
+  BigNumber.from('7000'),
+  BigNumber.from('11000'),
+  true,
+  true,
+  true,
+  true,
+  true
+);
+
+export const maticParams: ProposalParams = new ProposalParams(
+  '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+  '',
+  '',
+  'WMATIC',
+  BigNumber.from('0'),
+  BigNumber.from('6500'),
+  BigNumber.from('7000'),
+  BigNumber.from('11000'),
+  false,
+  false,
+  false,
+  false,
+  true
+);
+
 
 export const ProposalStates = {
   PENDING: 0,
@@ -220,6 +372,6 @@ export class ProposalPayloads {
   }
 
   get initReservePayload() {
-    return Array.from(this.initReserve, x => x.payload);
+    return [Array.from(this.initReserve, x => x.payload)];
   }
 }
