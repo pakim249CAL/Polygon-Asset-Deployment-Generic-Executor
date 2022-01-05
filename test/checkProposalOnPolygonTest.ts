@@ -68,7 +68,7 @@ describe("Proposal Check", function() {
       "PolygonAssetDeploymentGenericExecutor"
     );
     polygonDelegateCallExecutor = await PolygonDelegateCallExecutor.deploy();
-    proposalActions = fillPolygonProposalActionsDelegateCall();
+    proposalActions = fillPolygonProposalActionsDelegateCall(polygonDelegateCallExecutor.address);
     aaveOracle = await hre.ethers.getContractAt("IAaveOracle", oracleAddress);
     // At time of testing, ownership of oracle to the bridge has not been done.
     await aaveOracle.connect(multisig).transferOwnership(polygonBridgeExecutorAddress);

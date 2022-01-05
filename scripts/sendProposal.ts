@@ -46,6 +46,7 @@ async function main() {
     [false], 
     '0xf7a1f565fcd7684fba6fea5d77c5e699653e21cb6ae25fbf8c5dbc8d694c7949' //TODO: replace with correct IPFS hash
   );
+  console.log(proposal);
   const proposalId = await aaveGovernanceV2.getProposalsCount() - 1;
   console.log("Proposal ID: ", proposalId);
 }

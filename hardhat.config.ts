@@ -50,13 +50,14 @@ export default {
   networks: {
     hardhat: {
       gas: 60000000,
+      chainId: 1,
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
       forking: {
-        url: "https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
-          //"https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
-        blockNumber: 13820000,
-        //23031796,
+        url: //"https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
+          "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
+        blockNumber: //13820000,
+        23031796,
       },
     },
     local: {
@@ -71,7 +72,7 @@ export default {
       url: "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-      gas: 1000 * 1000 * 1000 * 50,
+      gas: 1000 * 1000 * 1000 * 700,
     }
   },
   gasReporter: {
