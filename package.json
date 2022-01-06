@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx hardhat test"
+    "hardhat": "hardhat",
+    "end-to-end-test": "hardhat test ./test/sendProposalTest"
   },
   "author": "",
   "license": "ISC",
