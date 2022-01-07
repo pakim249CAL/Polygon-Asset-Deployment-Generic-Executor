@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "hardhat": "hardhat",
+    "sendProposalTest": "npm run hardhat test ./test/sendProposalTest",
+    "checkProposalOnPolygonTest": "POLYGON_FORK=TRUE npm run hardhat test ./test/checkProposalOnPolygonTest",
     "test": "npx hardhat test"
   },
   "author": "",
