@@ -1,12 +1,14 @@
 require("dotenv").config();
 
-import {task} from "hardhat/config";
+import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "hardhat-abi-exporter";
 import "@typechain/hardhat";
+
+import "./tasks/sendProposal.ts";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -18,6 +20,19 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
+const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
+
+const forkingConfig =
+  process.env.POLYGON_FORK == "TRUE"
+    ? {
+        url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+        blockNumber: 23351249,
+      }
+    : {
+        url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+        blockNumber: 13820000,
+      };
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -28,16 +43,16 @@ export default {
   solidity: {
     compilers: [
       {
-        version: "0.5.2"
+        version: "0.5.2",
       },
       {
-        version: "0.6.12"
+        version: "0.6.12",
       },
       {
-        version: "0.7.3"
+        version: "0.7.3",
       },
       {
-        version: "0.7.5"
+        version: "0.7.5",
       },
     ],
     settings: {
@@ -53,34 +68,27 @@ export default {
       chainId: 1,
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
-      forking: {
-        url: //"https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
-          "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
-        blockNumber: //13820000,
-        23031796,
-      },
+      forking: forkingConfig,
     },
     local: {
       url: process.env.LOCAL_URL || "http://127.0.0.1:8545",
     },
     mainnet: {
-      url: "https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     matic: {
-      url: "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       gas: 1000 * 1000 * 1000 * 700,
-    }
+    },
   },
   gasReporter: {
     enabled: true,
-    currency: 'USD',
+    currency: "USD",
     gasPrice: 55,
     coinmarketcap: "71a0e4d4-2872-4441-8dda-97464b6d5e55",
-    token: 'ETH'
+    token: "ETH",
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
