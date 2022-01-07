@@ -1,4 +1,5 @@
 require("dotenv").config();
+import * as fs from "fs";
 import * as hre from "hardhat";
 import { DRE } from "../helpers/misc-utils";
 import { ethers } from "hardhat";
@@ -6,16 +7,8 @@ import { Signer } from "ethers";
 import { BigNumber } from "ethers";
 import { expect } from "chai";
 
-import {
-  ProposalStates,
-  shortExecutorAddress,
-  fxRootAddress,
-  aaveGovernanceV2Address,
-} from "../helpers/types";
-import {
-  fillPolygonProposalActions,
-  fillPolygonProposalActionsDelegateCall,
-} from "../helpers/helpers";
+import { ProposalStates, fxRootAddress, aaveGovernanceV2Address } from "../helpers/types";
+import { fillPolygonProposalActionsDelegateCall } from "../helpers/helpers";
 
 describe("Proposal Test", function () {
   let whale1: Signer;
@@ -126,7 +119,7 @@ describe("Proposal Test", function () {
     expect(await aaveGovernanceV2.getProposalState(proposalId)).to.equal(ProposalStates.QUEUED);
   });
 
-  it("Queue proposal", async () => {
+  it("Execute proposal", async () => {
     //Execute proposal
     //Execution timelock is 86400
     await DRE.network.provider.send("evm_increaseTime", [86401]);
@@ -141,6 +134,9 @@ describe("Proposal Test", function () {
     const topics = receipt.logs[0].topics;
     const event = stateSenderInterface.decodeEventLog("StateSynced", data, topics);
     expect(event.data).to.equal(proposalActions.stateSenderData);
+    await fs.writeFile("FxData.txt", event.data, (err) => {
+      if (err) throw err;
+    });
     expect(await aaveGovernanceV2.getProposalState(proposalId)).to.equal(ProposalStates.EXECUTED);
   });
 });

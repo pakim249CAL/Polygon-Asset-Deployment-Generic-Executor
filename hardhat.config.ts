@@ -23,6 +23,17 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
 
+const forkingConfig =
+  process.env.MAINNET_FORK == "TRUE"
+    ? {
+        url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+        blockNumber: 13820000,
+      }
+    : {
+        url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+        blockNumber: 23351249,
+      };
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -58,21 +69,8 @@ export default {
       chainId: 1,
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
-      forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
-        blockNumber: 13820000,
-      },
+      forking: forkingConfig,
     },
-    // hardhatPolygon: {
-    //   gas: 60000000,
-    //   chainId: 1,
-    //   blockGasLimit: 0x1fffffffffffff,
-    //   allowUnlimitedContractSize: true,
-    //   forking: {
-    //     url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
-    //     blockNumber: 23031796,
-    //   },
-    // },
     local: {
       url: process.env.LOCAL_URL || "http://127.0.0.1:8545",
     },
@@ -87,7 +85,7 @@ export default {
     },
   },
   gasReporter: {
-    enabled: true,
+    enabled: false,
     currency: "USD",
     gasPrice: 55,
     coinmarketcap: "71a0e4d4-2872-4441-8dda-97464b6d5e55",

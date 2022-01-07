@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "hardhat": "hardhat",
-    "end-to-end-test": "hardhat test ./test/sendProposalTest"
+    "sendProposalTest": "MAINNET_FORK=TRUE hardhat test ./test/sendProposalTest",
+    "checkProposalOnPolygonTest": "MAINNET_FORK=FALSE && hardhat test ./test/checkProposalOnPolygonTest",
+    "end-to-end-test": "npm run sendProposalTest && npm run checkProposalOnPolygonTest"
   },
   "author": "",
   "license": "ISC",

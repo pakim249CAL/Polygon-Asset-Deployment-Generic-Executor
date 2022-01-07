@@ -1,5 +1,4 @@
 import { task } from "hardhat/config";
-import * as fs from "fs";
 import { shortExecutorAddress, fxRootAddress, aaveGovernanceV2Address } from "../helpers/types";
 import {
   fillPolygonProposalActions,
@@ -21,11 +20,6 @@ task("sendProposal", "Send proposal").setAction(async (_, hre) => {
   let proposalActions = fillPolygonProposalActionsDelegateCall();
   let aaveGovernanceV2;
 
-  await fs.writeFile("FxData.txt", proposalActions.stateSenderData, (err) => {
-    if (err) throw err;
-  });
-  console.log("State sender data written to FxData.txt");
-
   // Make the proposal
   const AaveGovernanceV2 = await hre.ethers.getContractFactory("AaveGovernanceV2");
   aaveGovernanceV2 = await AaveGovernanceV2.attach(aaveGovernanceV2Address);
@@ -40,7 +34,11 @@ task("sendProposal", "Send proposal").setAction(async (_, hre) => {
   );
 
   const proposalId = (await aaveGovernanceV2.getProposalsCount()) - 1;
-  console.log(`\nProposal Created - ID:  ${proposalId}`);
+
+  if (hre.network.name == "mainnet") {
+    console.log(`Proposal Created - ID:  ${proposalId}`);
+    console.log(`Proposal Transaction Hash:  ${proposal.hash}`);
+  }
 
   return proposal.hash;
 });
