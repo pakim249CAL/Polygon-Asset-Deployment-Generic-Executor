@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx hardhat test"
+    "test": "npx hardhat test",
+    "prettier": "prettier --write *.ts ./test/*.ts ./scripts/*.ts ./helpers/*.ts"
   },
   "author": "",
   "license": "ISC",

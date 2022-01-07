@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-import {task} from "hardhat/config";
+import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
 import "hardhat-gas-reporter";
@@ -28,16 +28,16 @@ export default {
   solidity: {
     compilers: [
       {
-        version: "0.5.2"
+        version: "0.5.2",
       },
       {
-        version: "0.6.12"
+        version: "0.6.12",
       },
       {
-        version: "0.7.3"
+        version: "0.7.3",
       },
       {
-        version: "0.7.5"
+        version: "0.7.5",
       },
     ],
     settings: {
@@ -54,10 +54,10 @@ export default {
       blockGasLimit: 0x1fffffffffffff,
       allowUnlimitedContractSize: true,
       forking: {
-        url: //"https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
-          "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
-        blockNumber: //13820000,
-        23031796,
+        //"https://eth-mainnet.alchemyapi.io/v2/UJwzHuOAu9vEZ6M4pBgsyb44Ef7PyCc3",
+        url: "https://polygon-mainnet.g.alchemy.com/v2/7Iz6OzPC0Kac5lINPxEIBmwkaFk1Ue7b",
+        //13820000,
+        blockNumber: 23031796,
       },
     },
     local: {
@@ -73,14 +73,14 @@ export default {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       gas: 1000 * 1000 * 1000 * 700,
-    }
+    },
   },
   gasReporter: {
     enabled: true,
-    currency: 'USD',
+    currency: "USD",
     gasPrice: 55,
     coinmarketcap: "71a0e4d4-2872-4441-8dda-97464b6d5e55",
-    token: 'ETH'
+    token: "ETH",
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,

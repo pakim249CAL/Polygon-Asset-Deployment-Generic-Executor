@@ -5,7 +5,7 @@
 // Runtime Environment's members available in the global scope.
 import * as hre from "hardhat";
 import { ethers } from "hardhat";
-import "@nomiclabs/hardhat-ethers"
+import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
 import "hardhat-gas-reporter";
 
@@ -16,7 +16,6 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
-
 
   const ProposalDataProvider = await hre.ethers.getContractFactory(
     "ProposalDataProvider"
@@ -30,11 +29,10 @@ async function main() {
     address: proposalDataProvider.address,
     constructorArguments: [],
   });
-  
 }
 
 function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
