@@ -4,9 +4,6 @@ import { ethers } from "hardhat";
 import { Signer } from "ethers";
 import { BigNumber } from "ethers";
 import { expect } from "chai";
-import "@nomiclabs/hardhat-ethers";
-import "@nomiclabs/hardhat-waffle";
-import "hardhat-gas-reporter";
 
 import {
   ProposalStates,
