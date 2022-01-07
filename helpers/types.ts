@@ -1,17 +1,18 @@
 import { BigNumber } from "ethers";
 
-export const polygonBridgeExecutorAddress = '0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772';
-export const polygonLendingPoolConfiguratorAddress = '0x26db2B833021583566323E3b8985999981b9F1F3';
-export const shortExecutorAddress = '0xEE56e2B3D491590B5b31738cC34d5232F378a8D5';
-export const fxRootAddress = '0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2';
-export const oracleAddress = '0x0229F777B0fAb107F9591a41d5F02E4e98dB6f2d'; // Polygon AAVE Oracle Address
-export const aTokenAddress = '0x3cb4ca3c9dc0e02d252098eebb3871ac7a43c54d'; 
-export const stableDebtAddress = '0x72a053fa208eaafa53adb1a1ea6b4b2175b5735e';
-export const variableDebtAddress = '0x1d22ae684f479d3da97ca19ffb03e6349d345f24';
-export const aaveGovernanceV2Address = '0xEC568fffba86c094cf06b22134B23074DFE2252c';
-export const treasuryAddress = '0x7734280A4337F37Fbf4651073Db7c28C80B339e9';
-export const incentivesControllerAddress = '0x357D51124f59836DeD84c8a1730D72B749d8BC23';
-export const deployerAddress = '0x685582B372f7947C0Cb51A82f9101605294e9f64';
+export const polygonBridgeExecutorAddress = "0xdc9A35B16DB4e126cFeDC41322b3a36454B1F772";
+export const polygonLendingPoolConfiguratorAddress = "0x26db2B833021583566323E3b8985999981b9F1F3";
+export const shortExecutorAddress = "0xEE56e2B3D491590B5b31738cC34d5232F378a8D5";
+export const fxRootAddress = "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2";
+export const fxChildAddress = "0x8397259c983751DAf40400790063935a11afa28a";
+export const oracleAddress = "0x0229F777B0fAb107F9591a41d5F02E4e98dB6f2d"; // Polygon AAVE Oracle Address
+export const aTokenAddress = "0x3cb4ca3c9dc0e02d252098eebb3871ac7a43c54d";
+export const stableDebtAddress = "0x72a053fa208eaafa53adb1a1ea6b4b2175b5735e";
+export const variableDebtAddress = "0x1d22ae684f479d3da97ca19ffb03e6349d345f24";
+export const aaveGovernanceV2Address = "0xEC568fffba86c094cf06b22134B23074DFE2252c";
+export const treasuryAddress = "0x7734280A4337F37Fbf4651073Db7c28C80B339e9";
+export const incentivesControllerAddress = "0x357D51124f59836DeD84c8a1730D72B749d8BC23";
+export const deployerAddress = "0x685582B372f7947C0Cb51A82f9101605294e9f64";
 
 export class ProposalParams {
   underlying: string;
@@ -41,7 +42,7 @@ export class ProposalParams {
     initReserve: Boolean = false,
     updateOracle: Boolean = false,
     updateReserveFactor: Boolean = false,
-    updateReserveConfiguration: Boolean = false,
+    updateReserveConfiguration: Boolean = false
   ) {
     this.underlying = underlying;
     this.interestRateStrategy = interestRateStrategy;
@@ -56,19 +57,18 @@ export class ProposalParams {
     this.updateOracle = updateOracle;
     this.updateReserveFactor = updateReserveFactor;
     this.updateReserveConfiguration = updateReserveConfiguration;
-
   }
 }
 
 export const ghstParams: ProposalParams = new ProposalParams(
-  '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7',
-  '0xBb480ae4e2cf28FBE80C9b61ab075f6e7C4dB468',
-  '0xe638249AF9642CdA55A92245525268482eE4C67b',
-  'GHST',
-  BigNumber.from('2000'),
-  BigNumber.from('2500'),
-  BigNumber.from('4500'),
-  BigNumber.from('11250'),
+  "0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7",
+  "0xBb480ae4e2cf28FBE80C9b61ab075f6e7C4dB468",
+  "0xe638249AF9642CdA55A92245525268482eE4C67b",
+  "GHST",
+  BigNumber.from("2000"),
+  BigNumber.from("2500"),
+  BigNumber.from("4500"),
+  BigNumber.from("11250"),
   true,
   true,
   true,
@@ -77,14 +77,14 @@ export const ghstParams: ProposalParams = new ProposalParams(
 );
 
 export const balParams: ProposalParams = new ProposalParams(
-  '0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3',
-  '0x9025C2d672afA29f43cB59b3035CaCfC401F5D62',
-  '0x03CD157746c61F44597dD54C6f6702105258C722',
-  'BAL',
-  BigNumber.from('2000'),
-  BigNumber.from('2000'),
-  BigNumber.from('4500'),
-  BigNumber.from('11000'),
+  "0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3",
+  "0x9025C2d672afA29f43cB59b3035CaCfC401F5D62",
+  "0x03CD157746c61F44597dD54C6f6702105258C722",
+  "BAL",
+  BigNumber.from("2000"),
+  BigNumber.from("2000"),
+  BigNumber.from("4500"),
+  BigNumber.from("11000"),
   true,
   true,
   true,
@@ -93,14 +93,14 @@ export const balParams: ProposalParams = new ProposalParams(
 );
 
 export const dpiParams: ProposalParams = new ProposalParams(
-  '0x85955046df4668e1dd369d2de9f3aeb98dd2a369',
-  '0x6405F880E431403588e92b241Ca15603047ef8a4',
-  '0xC70aAF9092De3a4E5000956E672cDf5E996B4610',
-  'DPI',
-  BigNumber.from('2000'),
-  BigNumber.from('2000'),
-  BigNumber.from('4500'),
-  BigNumber.from('11000'),
+  "0x85955046df4668e1dd369d2de9f3aeb98dd2a369",
+  "0x6405F880E431403588e92b241Ca15603047ef8a4",
+  "0xC70aAF9092De3a4E5000956E672cDf5E996B4610",
+  "DPI",
+  BigNumber.from("2000"),
+  BigNumber.from("2000"),
+  BigNumber.from("4500"),
+  BigNumber.from("11000"),
   false,
   true,
   true,
@@ -109,14 +109,14 @@ export const dpiParams: ProposalParams = new ProposalParams(
 );
 
 export const crvParams: ProposalParams = new ProposalParams(
-  '0x172370d5cd63279efa6d502dab29171933a610af',
-  '0xBD67eB7e00f43DAe9e3d51f7d509d4730Fe5988e',
-  '0x1CF68C76803c9A415bE301f50E82e44c64B7F1D4',
-  'CRV',
-  BigNumber.from('2000'),
-  BigNumber.from('2000'),
-  BigNumber.from('4500'),
-  BigNumber.from('11000'),
+  "0x172370d5cd63279efa6d502dab29171933a610af",
+  "0xBD67eB7e00f43DAe9e3d51f7d509d4730Fe5988e",
+  "0x1CF68C76803c9A415bE301f50E82e44c64B7F1D4",
+  "CRV",
+  BigNumber.from("2000"),
+  BigNumber.from("2000"),
+  BigNumber.from("4500"),
+  BigNumber.from("11000"),
   true,
   true,
   true,
@@ -125,14 +125,14 @@ export const crvParams: ProposalParams = new ProposalParams(
 );
 
 export const sushiParams: ProposalParams = new ProposalParams(
-  '0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a',
-  '0x835699Bf98f6a7fDe5713c42c118Fb80fA059737',
-  '0x17414Eb5159A082e8d41D243C1601c2944401431',
-  'SUSHI',
-  BigNumber.from('3500'),
-  BigNumber.from('2000'),
-  BigNumber.from('4500'),
-  BigNumber.from('11000'),
+  "0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a",
+  "0x835699Bf98f6a7fDe5713c42c118Fb80fA059737",
+  "0x17414Eb5159A082e8d41D243C1601c2944401431",
+  "SUSHI",
+  BigNumber.from("3500"),
+  BigNumber.from("2000"),
+  BigNumber.from("4500"),
+  BigNumber.from("11000"),
   false,
   true,
   true,
@@ -141,14 +141,14 @@ export const sushiParams: ProposalParams = new ProposalParams(
 );
 
 export const linkParams: ProposalParams = new ProposalParams(
-  '0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39',
-  '0x5641Bb58f4a92188A6F16eE79C8886Cf42C561d3',
-  '0xb77fa460604b9C6435A235D057F7D319AC83cb53',
-  'LINK',
-  BigNumber.from('1000'),
-  BigNumber.from('6500'),
-  BigNumber.from('7000'),
-  BigNumber.from('11000'),
+  "0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39",
+  "0x5641Bb58f4a92188A6F16eE79C8886Cf42C561d3",
+  "0xb77fa460604b9C6435A235D057F7D319AC83cb53",
+  "LINK",
+  BigNumber.from("1000"),
+  BigNumber.from("6500"),
+  BigNumber.from("7000"),
+  BigNumber.from("11000"),
   true,
   true,
   true,
@@ -157,21 +157,20 @@ export const linkParams: ProposalParams = new ProposalParams(
 );
 
 export const maticParams: ProposalParams = new ProposalParams(
-  '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
-  '',
-  '',
-  'WMATIC',
-  BigNumber.from('0'),
-  BigNumber.from('6500'),
-  BigNumber.from('7000'),
-  BigNumber.from('11000'),
+  "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+  "",
+  "",
+  "WMATIC",
+  BigNumber.from("0"),
+  BigNumber.from("6500"),
+  BigNumber.from("7000"),
+  BigNumber.from("11000"),
   false,
   false,
   false,
   false,
   true
 );
-
 
 export const ProposalStates = {
   PENDING: 0,
@@ -203,9 +202,9 @@ export class ProposalActions {
     this.signatures = [];
     this.calldatas = [];
     this.withDelegatecalls = [];
-    this.encodedRootCalldata = '';
-    this.encodedActions = '';
-    this.stateSenderData = '';
+    this.encodedRootCalldata = "";
+    this.encodedActions = "";
+    this.stateSenderData = "";
     this.executionTime = 0;
   }
 }
@@ -229,22 +228,22 @@ export class InitiateReservePayload {
   params: string;
 
   constructor(
-    aToken: string = '',
-    stableDebt: string = '',
-    variableDebt: string = '',
+    aToken: string = "",
+    stableDebt: string = "",
+    variableDebt: string = "",
     decimals: number = 18,
-    interestRateStrategy: string = '',
-    underlying: string = '',
-    treasury: string = '',
-    incentivesController: string = '',
-    underlyingName: string = '',
-    aTokenName: string = '',
-    aTokenSymbol: string = '',
-    variableDebtName: string = '',
-    variableDebtSymbol: string = '',
-    stableDebtName: string = '',
-    stableDebtSymbol: string = '',
-    params: string = ''
+    interestRateStrategy: string = "",
+    underlying: string = "",
+    treasury: string = "",
+    incentivesController: string = "",
+    underlyingName: string = "",
+    aTokenName: string = "",
+    aTokenSymbol: string = "",
+    variableDebtName: string = "",
+    variableDebtSymbol: string = "",
+    stableDebtName: string = "",
+    stableDebtSymbol: string = "",
+    params: string = ""
   ) {
     this.aToken = aToken;
     this.stableDebt = stableDebt;
@@ -266,22 +265,22 @@ export class InitiateReservePayload {
 
   get payload() {
     return [
-      this.aToken, 
-      this.stableDebt, 
-      this.variableDebt, 
-      this.decimals, 
-      this.interestRateStrategy, 
-      this.underlying, 
-      this.treasury, 
-      this.incentivesController, 
-      this.underlyingName, 
-      this.aTokenName, 
-      this.aTokenSymbol, 
-      this.variableDebtName, 
-      this.variableDebtSymbol, 
-      this.stableDebtName, 
-      this.stableDebtSymbol, 
-      this.params
+      this.aToken,
+      this.stableDebt,
+      this.variableDebt,
+      this.decimals,
+      this.interestRateStrategy,
+      this.underlying,
+      this.treasury,
+      this.incentivesController,
+      this.underlyingName,
+      this.aTokenName,
+      this.aTokenSymbol,
+      this.variableDebtName,
+      this.variableDebtSymbol,
+      this.stableDebtName,
+      this.stableDebtSymbol,
+      this.params,
     ];
   }
 }
@@ -303,11 +302,11 @@ export class InitiateReserveDelegateCallPayload {
   params: string;
 
   constructor(
-    underlying: string = '',
-    aToken: string = '',
-    stableDebt: string = '',
-    variableDebt: string = '',
-    interestRateStrategy: string = '',
+    underlying: string = "",
+    aToken: string = "",
+    stableDebt: string = "",
+    variableDebt: string = "",
+    interestRateStrategy: string = "",
     ltv: BigNumber = BigNumber.from(0),
     lt: BigNumber = BigNumber.from(0),
     lb: BigNumber = BigNumber.from(0),
@@ -315,8 +314,8 @@ export class InitiateReserveDelegateCallPayload {
     decimals: BigNumber = BigNumber.from(18),
     borrowEnabled: Boolean = false,
     stableBorrowEnabled: Boolean = false,
-    name: string = '',
-    params: string = ''
+    name: string = "",
+    params: string = ""
   ) {
     this.underlying = underlying;
     this.aToken = aToken;
@@ -348,7 +347,7 @@ export class InitiateReserveDelegateCallPayload {
       this.borrowEnabled,
       this.stableBorrowEnabled,
       this.name,
-      this.params
+      this.params,
     ];
   }
 }
@@ -371,14 +370,11 @@ export class ReserveFactorPayload {
   asset: string;
   reserveFactor: BigNumber;
 
-  constructor(
-    asset: string = '',
-    reserveFactor: BigNumber = BigNumber.from('0')
-  ) {
+  constructor(asset: string = "", reserveFactor: BigNumber = BigNumber.from("0")) {
     this.asset = asset;
     this.reserveFactor = reserveFactor;
   }
-  
+
   get payload() {
     return [this.asset, this.reserveFactor];
   }
@@ -391,11 +387,11 @@ export class ConfigureReservePayload {
   lb: BigNumber;
 
   constructor(
-    asset: string = '',
-    ltv: BigNumber = BigNumber.from('0'),
-    lt: BigNumber = BigNumber.from('0'),
-    lb: BigNumber = BigNumber.from('0')
-    ) {
+    asset: string = "",
+    ltv: BigNumber = BigNumber.from("0"),
+    lt: BigNumber = BigNumber.from("0"),
+    lb: BigNumber = BigNumber.from("0")
+  ) {
     this.asset = asset;
     this.ltv = ltv;
     this.lt = lt;
@@ -411,10 +407,7 @@ export class EnableBorrowPayload {
   asset: string;
   enableStableBorrow: Boolean;
 
-  constructor(
-    asset: string = '',
-    enableStableBorrow: Boolean = false
-  ) {
+  constructor(asset: string = "", enableStableBorrow: Boolean = false) {
     this.asset = asset;
     this.enableStableBorrow = enableStableBorrow;
   }
@@ -430,7 +423,7 @@ export class ProposalPayloads {
   reserveFactor: ReserveFactorPayload[];
   configReserve: ConfigureReservePayload[];
   borrow: EnableBorrowPayload[];
-  oracle: OraclePayload; 
+  oracle: OraclePayload;
 
   constructor() {
     this.initReserve = [];
@@ -442,9 +435,9 @@ export class ProposalPayloads {
   }
 
   get initReservePayload() {
-    return [Array.from(this.initReserve, x => x.payload)];
+    return [Array.from(this.initReserve, (x) => x.payload)];
   }
   get initReserveDelegateCallPayload() {
-    return [Array.from(this.initReserveDelegateCall, x => x.payload)];
+    return [Array.from(this.initReserveDelegateCall, (x) => x.payload)];
   }
 }

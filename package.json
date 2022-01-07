@@ -7,7 +7,7 @@
     "hardhat": "hardhat",
     "sendProposalTest": "npm run hardhat test ./test/sendProposalTest",
     "checkProposalOnPolygonTest": "POLYGON_FORK=TRUE npm run hardhat test ./test/checkProposalOnPolygonTest",
-    "test": "npx hardhat test"
+    "end-to-end-test": "npm run sendProposalTest && END_TO_END=TRUE npm run checkProposalOnPolygonTest"
   },
   "author": "",
   "license": "ISC",
