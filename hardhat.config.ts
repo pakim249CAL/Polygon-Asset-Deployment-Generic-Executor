@@ -9,6 +9,7 @@ import "hardhat-abi-exporter";
 import "@typechain/hardhat";
 
 import "./tasks/sendProposal.ts";
+import "./tasks/set-DRE.ts";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html

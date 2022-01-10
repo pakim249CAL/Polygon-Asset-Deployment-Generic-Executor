@@ -15,6 +15,7 @@ export const treasuryAddress = "0x7734280A4337F37Fbf4651073Db7c28C80B339e9";
 export const incentivesControllerAddress = "0x357D51124f59836DeD84c8a1730D72B749d8BC23";
 export const oracleAddress = "0x0229F777B0fAb107F9591a41d5F02E4e98dB6f2d"; // Polygon AAVE Oracle Address
 export const polygonLendingPoolConfiguratorAddress = "0x26db2B833021583566323E3b8985999981b9F1F3";
+export const polygonLendingPoolAddress = "0x8dFf5E27EA6b7AC08EbFdf9eB090F32ee9a30fcf";
 
 // Proposal Logic on Polygon
 export const deployerAddress = "0x685582B372f7947C0Cb51A82f9101605294e9f64";
@@ -23,6 +24,14 @@ export const deployerAddress = "0x685582B372f7947C0Cb51A82f9101605294e9f64";
 export const aTokenAddress = "0x3cb4ca3c9dc0e02d252098eebb3871ac7a43c54d";
 export const stableDebtAddress = "0x72a053fa208eaafa53adb1a1ea6b4b2175b5735e";
 export const variableDebtAddress = "0x1d22ae684f479d3da97ca19ffb03e6349d345f24";
+
+// Token Strings
+export const ATOKEN_NAME_PREFIX = "Aave Matic Market ";
+export const ATOKEN_SYMBOL_PREFIX = "am";
+export const VAR_DEBT_NAME_PREFIX = "Aave Matic Market variable debt ";
+export const VAR_DEBT_SYMBOL_PREFIX = "variableDebtm";
+export const STABLE_DEBT_NAME_PREFIX = "Aave Matic Market stable debt ";
+export const STABLE_DEBT_SYMBOL_PREFIX = "stableDebtm";
 
 // GHST Constants
 const GHST_UNDERLYING_ASSET: string = "0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7";

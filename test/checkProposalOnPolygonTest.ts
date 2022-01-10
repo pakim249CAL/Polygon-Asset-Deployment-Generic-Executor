@@ -18,6 +18,11 @@ import {
 } from "../helpers/constants";
 
 import { fillPolygonProposalActionsDelegateCall } from "../helpers/helpers";
+import {
+  checkATokenConfiguration,
+  checkVariableDebtTokenConfiguration,
+  checkStableDebtTokenConfiguration,
+} from "./helpers/tokenConfiguration";
 
 describe("Proposal Check", function () {
   const spoofAddress = "0x0000000000000000000000000000000000001001";
@@ -43,6 +48,7 @@ describe("Proposal Check", function () {
   let proposalActions: any;
 
   before(async function () {
+    await hre.run("set-DRE");
     //Spoofing special address to simulate sending data through bridge
     await hre.network.provider.request({
       method: "hardhat_impersonateAccount",
@@ -116,6 +122,13 @@ describe("Proposal Check", function () {
       if (proposalParams[i].initReserve) {
         expect(reserveData.interestRateStrategyAddress).to.equal(proposalParams[i].interestRateStrategy);
         expect(reserveConfig.isActive).to.equal(true);
+
+        await checkATokenConfiguration(proposalParams[i], reserveData.aTokenAddress);
+        await checkVariableDebtTokenConfiguration(
+          proposalParams[i],
+          reserveData.variableDebtTokenAddress
+        );
+        await checkStableDebtTokenConfiguration(proposalParams[i], reserveData.stableDebtTokenAddress);
       }
       //Check if borrow is enabled and disabled correctly
       if (proposalParams[i].borrow || proposalParams[i].name == "WMATIC") {
