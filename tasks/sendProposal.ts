@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { task } from "hardhat/config";
-import { shortExecutorAddress, fxRootAddress, aaveGovernanceV2Address } from "../helpers/types";
+import { shortExecutorAddress, fxRootAddress, aaveGovernanceV2Address } from "../helpers/constants";
 import { fillPolygonProposalActionsDelegateCall } from "../helpers/helpers";
 
 task("sendProposal", "Send proposal").setAction(async (_, hre) => {
