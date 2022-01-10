@@ -15,7 +15,7 @@ import {
   sushiParams,
   linkParams,
   maticParams,
-} from "../helpers/types";
+} from "../helpers/constants";
 
 import { fillPolygonProposalActionsDelegateCall } from "../helpers/helpers";
 
@@ -110,15 +110,11 @@ describe("Proposal Check", function () {
     console.log("\tPolygon ActionsSet Executed\n");
     console.log("\tChecking State...");
     for (let i = 0; i < proposalParams.length; i++) {
-      const reserveConfig = await dataProvider.getReserveConfigurationData(
-        proposalParams[i].underlying
-      );
+      const reserveConfig = await dataProvider.getReserveConfigurationData(proposalParams[i].underlying);
       //Check if reserves are initiated with tokens and market is active
       const reserveData = await lendingPool.getReserveData(proposalParams[i].underlying);
       if (proposalParams[i].initReserve) {
-        expect(reserveData.interestRateStrategyAddress).to.equal(
-          proposalParams[i].interestRateStrategy
-        );
+        expect(reserveData.interestRateStrategyAddress).to.equal(proposalParams[i].interestRateStrategy);
         expect(reserveConfig.isActive).to.equal(true);
       }
       //Check if borrow is enabled and disabled correctly
