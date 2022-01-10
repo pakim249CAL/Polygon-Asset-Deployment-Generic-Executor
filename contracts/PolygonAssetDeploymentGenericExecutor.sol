@@ -77,27 +77,22 @@ interface ILendingPoolAddressesProvider {
 contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   event ProposalExecuted();
 
-  // contracts
   ILendingPoolAddressesProvider public constant LENDING_POOL_ADDRESSES_PROVIDER =
     ILendingPoolAddressesProvider(0xd05e3E715d945B59290df0ae8eF85c1BdB684744);
-
   IOracle public constant AAVE_ORACLE = IOracle(0x0229F777B0fAb107F9591a41d5F02E4e98dB6f2d);
 
-  // common constants - addresses
   address public constant TREASURY_ADDRESS = 0x7734280A4337F37Fbf4651073Db7c28C80B339e9;
   address public constant INCENTIVES_CONTROLLER_ADDRESS = 0x357D51124f59836DeD84c8a1730D72B749d8BC23;
   address public constant ATOKEN_ADDRESS = 0x3CB4cA3c9DC0e02D252098eEbb3871AC7a43c54d;
   address public constant VAR_IMPL_ADDRESS = 0x1d22AE684F479d3Da97CA19fFB03E6349D345F24;
   address public constant STABLE_IMPL_ADDRESS = 0x72a053fA208eaAFa53ADB1a1EA6b4b2175B5735E;
 
-  // common constants
   string public constant ATOKEN_NAME_PREFIX = "Aave Matic Market ";
   string public constant ATOKEN_SYMBOL_PREFIX = "am";
   string public constant VAR_DEBT_NAME_PREFIX = "Aave Matic Market variable debt ";
   string public constant VAR_DEBT_SYMBOL_PREFIX = "variableDebtm";
   string public constant STABLE_DEBT_NAME_PREFIX = "Aave Matic Market stable debt ";
   string public constant STABLE_DEBT_SYMBOL_PREFIX = "stableDebtm";
-
   bytes public constant param = "";
 
   // GHST constants
