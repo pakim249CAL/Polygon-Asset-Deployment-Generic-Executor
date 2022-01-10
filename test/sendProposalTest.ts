@@ -5,16 +5,9 @@ import { Signer } from "ethers";
 import { BigNumber } from "ethers";
 import { expect } from "chai";
 
-import {
-  ProposalStates,
-  shortExecutorAddress,
-  fxRootAddress,
-  aaveGovernanceV2Address,
-} from "../helpers/types";
-import {
-  fillPolygonProposalActions,
-  fillPolygonProposalActionsDelegateCall,
-} from "../helpers/helpers";
+import { aaveGovernanceV2Address } from "../helpers/constants";
+import { ProposalStates } from "../helpers/types";
+import { fillPolygonProposalActionsDelegateCall } from "../helpers/helpers";
 
 describe("Proposal Test", function () {
   let whale1: Signer;
@@ -75,9 +68,7 @@ describe("Proposal Test", function () {
       proposalTransactionHash
     );
 
-    const proposalCreatedEvent = aaveGovernanceV2.interface.parseLog(
-      proposalTransactionReceipt.logs[0]
-    );
+    const proposalCreatedEvent = aaveGovernanceV2.interface.parseLog(proposalTransactionReceipt.logs[0]);
     proposalId = proposalCreatedEvent.args.id;
     expect(proposalCreatedEvent.name).to.equal("ProposalCreated");
   });
@@ -106,9 +97,7 @@ describe("Proposal Test", function () {
     //Execution timelock is 86400
     await hre.network.provider.send("evm_increaseTime", [86401]);
     const executionTx = await aaveGovernanceV2.execute(proposalId);
-    const receipt = await hre.network.provider.send("eth_getTransactionReceipt", [
-      executionTx.hash,
-    ]);
+    const receipt = await hre.network.provider.send("eth_getTransactionReceipt", [executionTx.hash]);
     const stateSenderInterface = new ethers.utils.Interface([
       "event StateSynced(uint256 indexed id, address indexed contractAddress, bytes data)",
     ]);
