@@ -17,11 +17,6 @@ task("sendProposal", "Send proposal").setAction(async (_, hre) => {
   let proposalActions = fillPolygonProposalActionsDelegateCall();
   let aaveGovernanceV2;
 
-  await fs.writeFile("FxData.txt", proposalActions.stateSenderData, (err) => {
-    if (err) throw err;
-  });
-  console.log("State sender data written to FxData.txt");
-
   // Make the proposal
   const AaveGovernanceV2 = await hre.ethers.getContractFactory("AaveGovernanceV2");
   aaveGovernanceV2 = await AaveGovernanceV2.attach(aaveGovernanceV2Address);
@@ -34,7 +29,14 @@ task("sendProposal", "Send proposal").setAction(async (_, hre) => {
     [false],
     "0xf7a1f565fcd7684fba6fea5d77c5e699653e21cb6ae25fbf8c5dbc8d694c7949" //TODO: replace with correct IPFS hash
   );
-  console.log(proposal);
+
   const proposalId = (await aaveGovernanceV2.getProposalsCount()) - 1;
-  console.log("Proposal ID: ", proposalId);
+  const proposalHash = proposal.hash;
+
+  if (hre.network.name == "mainnet") {
+    console.log(`Proposal Created - ID:  ${proposalId}`);
+    console.log(`Proposal Transaction Hash:  ${proposal.hash}`);
+  }
+
+  return proposalHash;
 });
