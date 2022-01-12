@@ -104,7 +104,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   uint256 public constant GHST_LB = 11250;
   uint256 public constant GHST_RF = 2000;
   uint8 public constant GHST_DECIMALS = 18;
-  bool public constant GHST_BORROW_ENEABLED = true;
+  bool public constant GHST_BORROW_ENABLED = true;
   bool public constant GHST_STABLE_BORROW_ENABLED = false;
   string public constant GHST_UNDERLYING_ASSET_NAME = "GHST";
 
@@ -117,7 +117,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   uint256 public constant BAL_LB = 11000;
   uint256 public constant BAL_RF = 2000;
   uint8 public constant BAL_DECIMALS = 18;
-  bool public constant BAL_BORROW_ENEABLED = true;
+  bool public constant BAL_BORROW_ENABLED = true;
   bool public constant BAL_STABLE_BORROW_ENABLED = false;
   string public constant BAL_UNDERLYING_ASSET_NAME = "BAL";
 
@@ -130,7 +130,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   uint256 public constant DPI_LB = 11000;
   uint256 public constant DPI_RF = 2000;
   uint8 public constant DPI_DECIMALS = 18;
-  bool public constant DPI_BORROW_ENEABLED = false;
+  bool public constant DPI_BORROW_ENABLED = false;
   bool public constant DPI_STABLE_BORROW_ENABLED = false;
   string public constant DPI_UNDERLYING_ASSET_NAME = "DPI";
 
@@ -143,7 +143,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   uint256 public constant CRV_LB = 11000;
   uint256 public constant CRV_RF = 2000;
   uint8 public constant CRV_DECIMALS = 18;
-  bool public constant CRV_BORROW_ENEABLED = true;
+  bool public constant CRV_BORROW_ENABLED = true;
   bool public constant CRV_STABLE_BORROW_ENABLED = false;
   string public constant CRV_UNDERLYING_ASSET_NAME = "CRV";
 
@@ -156,7 +156,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   uint256 public constant SUSHI_LB = 11000;
   uint256 public constant SUSHI_RF = 3500;
   uint8 public constant SUSHI_DECIMALS = 18;
-  bool public constant SUSHI_BORROW_ENEABLED = false;
+  bool public constant SUSHI_BORROW_ENABLED = false;
   bool public constant SUSHI_STABLE_BORROW_ENABLED = false;
   string public constant SUSHI_UNDERLYING_ASSET_NAME = "SUSHI";
 
@@ -169,7 +169,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   uint256 public constant LINK_LB = 10750;
   uint256 public constant LINK_RF = 1000;
   uint8 public constant LINK_DECIMALS = 18;
-  bool public constant LINK_BORROW_ENEABLED = true;
+  bool public constant LINK_BORROW_ENABLED = true;
   bool public constant LINK_STABLE_BORROW_ENABLED = false;
   string public constant LINK_UNDERLYING_ASSET_NAME = "LINK";
 
@@ -193,7 +193,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
       lb: GHST_LB,
       rf: GHST_RF,
       decimals: GHST_DECIMALS,
-      borrowEnabled: GHST_BORROW_ENEABLED,
+      borrowEnabled: GHST_BORROW_ENABLED,
       stableBorrowEnabled: GHST_STABLE_BORROW_ENABLED,
       underlyingAssetName: GHST_UNDERLYING_ASSET_NAME
     });
@@ -206,7 +206,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
       lb: BAL_LB,
       rf: BAL_RF,
       decimals: BAL_DECIMALS,
-      borrowEnabled: BAL_BORROW_ENEABLED,
+      borrowEnabled: BAL_BORROW_ENABLED,
       stableBorrowEnabled: BAL_STABLE_BORROW_ENABLED,
       underlyingAssetName: BAL_UNDERLYING_ASSET_NAME
     });
@@ -219,7 +219,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
       lb: DPI_LB,
       rf: DPI_RF,
       decimals: DPI_DECIMALS,
-      borrowEnabled: DPI_BORROW_ENEABLED,
+      borrowEnabled: DPI_BORROW_ENABLED,
       stableBorrowEnabled: DPI_STABLE_BORROW_ENABLED,
       underlyingAssetName: DPI_UNDERLYING_ASSET_NAME
     });
@@ -232,7 +232,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
       lb: CRV_LB,
       rf: CRV_RF,
       decimals: CRV_DECIMALS,
-      borrowEnabled: CRV_BORROW_ENEABLED,
+      borrowEnabled: CRV_BORROW_ENABLED,
       stableBorrowEnabled: CRV_STABLE_BORROW_ENABLED,
       underlyingAssetName: CRV_UNDERLYING_ASSET_NAME
     });
@@ -245,7 +245,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
       lb: SUSHI_LB,
       rf: SUSHI_RF,
       decimals: SUSHI_DECIMALS,
-      borrowEnabled: SUSHI_BORROW_ENEABLED,
+      borrowEnabled: SUSHI_BORROW_ENABLED,
       stableBorrowEnabled: SUSHI_STABLE_BORROW_ENABLED,
       underlyingAssetName: SUSHI_UNDERLYING_ASSET_NAME
     });
@@ -258,7 +258,7 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
       lb: LINK_LB,
       rf: LINK_RF,
       decimals: LINK_DECIMALS,
-      borrowEnabled: LINK_BORROW_ENEABLED,
+      borrowEnabled: LINK_BORROW_ENABLED,
       stableBorrowEnabled: LINK_STABLE_BORROW_ENABLED,
       underlyingAssetName: LINK_UNDERLYING_ASSET_NAME
     });
