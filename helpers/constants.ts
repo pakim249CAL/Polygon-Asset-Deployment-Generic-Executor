@@ -21,7 +21,7 @@ export const polygonLendingPoolConfiguratorAddress = "0x26db2B833021583566323E3b
 export const polygonLendingPoolAddress = "0x8dFf5E27EA6b7AC08EbFdf9eB090F32ee9a30fcf";
 
 // Proposal Logic on Polygon
-export const deployerAddress = "0x685582B372f7947C0Cb51A82f9101605294e9f64";
+export const deployerAddress = "0x8b97a0B37974Ddec0CB8B8039a4e593457DefE8c";
 
 // Token Logic Implementation Contracts
 export const aTokenAddress = "0x3cb4ca3c9dc0e02d252098eebb3871ac7a43c54d";
