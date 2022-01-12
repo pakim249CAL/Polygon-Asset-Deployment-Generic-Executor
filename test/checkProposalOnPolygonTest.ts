@@ -23,6 +23,7 @@ import {
   checkVariableDebtTokenConfiguration,
   checkStableDebtTokenConfiguration,
 } from "./helpers/tokenConfiguration";
+import { fullCycleTest } from "./helpers/fullCycleTest";
 
 describe("Proposal Check", function () {
   const spoofAddress = "0x0000000000000000000000000000000000001001";
@@ -152,6 +153,12 @@ describe("Proposal Check", function () {
           proposalParams[i].oracleSource
         );
       }
+      await fullCycleTest(
+        proposalParams[i].name,
+        proposalParams[i].underlying,
+        lendingPool,
+        proposalParams[i].borrow || proposalParams[i].name == "WMATIC"
+      );
       console.log(`\t\t${proposalParams[i].name} configured correctly`);
     }
   });
