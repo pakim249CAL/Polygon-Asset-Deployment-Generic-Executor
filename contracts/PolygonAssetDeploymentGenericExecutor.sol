@@ -164,9 +164,9 @@ contract PolygonAssetDeploymentGenericExecutor is IProposalGenericExecutor {
   address public constant LINK_UNDERLYING_ASSET = 0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39;
   address public constant LINK_INTEREST_RATE_STRATEGY = 0x5641Bb58f4a92188A6F16eE79C8886Cf42C561d3;
   address public constant LINK_ORACLE = 0xb77fa460604b9C6435A235D057F7D319AC83cb53;
-  uint256 public constant LINK_LTV = 6500;
-  uint256 public constant LINK_LT = 7000;
-  uint256 public constant LINK_LB = 11000;
+  uint256 public constant LINK_LTV = 5000;
+  uint256 public constant LINK_LT = 6500;
+  uint256 public constant LINK_LB = 10750;
   uint256 public constant LINK_RF = 1000;
   uint8 public constant LINK_DECIMALS = 18;
   bool public constant LINK_BORROW_ENEABLED = true;
