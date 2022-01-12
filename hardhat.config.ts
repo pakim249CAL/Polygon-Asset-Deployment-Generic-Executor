@@ -27,7 +27,7 @@ const forkingConfig =
   process.env.POLYGON_FORK == "TRUE"
     ? {
         url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
-        blockNumber: 23351249,
+        blockNumber: 23630850,
       }
     : {
         url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,

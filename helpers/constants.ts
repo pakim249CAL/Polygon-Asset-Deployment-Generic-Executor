@@ -1,6 +1,9 @@
 import { BigNumber } from "ethers";
 import { ProposalParams } from "./types";
 
+export const MAX_UINT_AMOUNT =
+  "115792089237316195423570985008687907853269984665640564039457584007913129639935";
+
 // Polygon fx-portal contracts (https://github.com/fx-portal/contracts)
 export const fxRootAddress = "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2";
 export const fxChildAddress = "0x8397259c983751DAf40400790063935a11afa28a";
