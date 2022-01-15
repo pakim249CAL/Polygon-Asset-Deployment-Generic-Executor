@@ -27,7 +27,7 @@ task("sendProposal", "Send proposal").setAction(async (_, hre) => {
     ["sendMessageToChild(address,bytes)"],
     [proposalActions.encodedRootCalldata],
     [false],
-    "0xf7a1f565fcd7684fba6fea5d77c5e699653e21cb6ae25fbf8c5dbc8d694c7949" //TODO: replace with correct IPFS hash
+    "0x04f0230984b6b2973cd7c5408910b643145f2ca35161ac0592c6ef024b593ff6" //TODO: replace with correct IPFS hash
   );
 
   const proposalId = (await aaveGovernanceV2.getProposalsCount()) - 1;
