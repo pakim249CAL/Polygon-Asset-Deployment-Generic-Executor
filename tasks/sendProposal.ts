@@ -28,8 +28,10 @@ task("sendProposal", "Send proposal").setAction(async (_, hre) => {
     [proposalActions.encodedRootCalldata],
     [false],
     "0x04f0230984b6b2973cd7c5408910b643145f2ca35161ac0592c6ef024b593ff6", //TODO: replace with correct IPFS hash
-    {gasPrice: 1000 * 1000 * 1000 * 180,
-    gasLimit: 2000000}
+    {
+      maxFeePerGas: 1000 * 1000 * 1000 * 180,
+      maxPriorityFeePerGas: 1000 * 1000 * 1000,
+      gasLimit: 2000000}
   );
 
   const proposalId = (await aaveGovernanceV2.getProposalsCount()) - 1;
