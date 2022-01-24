@@ -8,6 +8,7 @@ import {
   fxChildAddress,
   polygonBridgeExecutorAddress,
   oracleAddress,
+  deployerAddress,
   ghstParams,
   balParams,
   dpiParams,
@@ -78,6 +79,13 @@ describe("Proposal Check", function () {
       "IAaveProtocolDataProvider",
       "0x7551b5D2763519d4e37e8B81929D336De671d46d"
     );
+  });
+
+  it("Check byte code", async () => {
+    const contractBytes = await hre.ethers.provider.getCode(deployerAddress);
+    const polygonExecutionArtifact = require("../artifacts/contracts/PolygonAssetDeploymentGenericExecutor.sol/PolygonAssetDeploymentGenericExecutor.json");
+    const contractArtifactBytes = polygonExecutionArtifact.deployedBytecode;
+    expect(contractBytes).to.be.equal(contractArtifactBytes);
   });
 
   it("transfer ownership of aave oracle - (to be removed)", async () => {

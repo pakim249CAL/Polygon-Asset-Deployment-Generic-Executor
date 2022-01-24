@@ -31,60 +31,40 @@ describe("Proposal Test", function () {
     });
     await hre.network.provider.request({
       method: "hardhat_impersonateAccount",
-      params: ["0xdD709cAE362972cb3B92DCeaD77127f7b8D58202"],
-    });
-    await hre.network.provider.request({
-      method: "hardhat_impersonateAccount",
       params: ["0x4a49985B14bD0ce42c25eFde5d8c379a48AB02F3"],
     });
     whale1 = await hre.ethers.getSigner("0x26a78D5b6d7a7acEEDD1e6eE3229b372A624d8b7");
     whale2 = await hre.ethers.getSigner("0x4da27a545c0c5b758a6ba100e3a049001de870f5");
-    whale3 = await hre.ethers.getSigner("0xdD709cAE362972cb3B92DCeaD77127f7b8D58202");
     whale4 = await hre.ethers.getSigner("0x4a49985B14bD0ce42c25eFde5d8c379a48AB02F3");
 
     await hre.network.provider.send("hardhat_setBalance", [
       await whale1.getAddress(),
-      "0x8AC7230489E80000",
+      "0xFFFFFFFFFFFFFFFFFFFFFFF",
     ]);
     await hre.network.provider.send("hardhat_setBalance", [
       await whale2.getAddress(),
-      "0x8AC7230489E80000",
-    ]);
-    await hre.network.provider.send("hardhat_setBalance", [
-      await whale3.getAddress(),
-      "0x8AC7230489E80000",
+      "0xFFFFFFFFFFFFFFFFFFFFFFF",
     ]);
     await hre.network.provider.send("hardhat_setBalance", [
       await whale4.getAddress(),
-      "0x8AC7230489E80000",
+      "0xFFFFFFFFFFFFFFFFFFFFFFF",
     ]);
     const AaveGovernanceV2 = await hre.ethers.getContractFactory("AaveGovernanceV2");
     aaveGovernanceV2 = await AaveGovernanceV2.attach(aaveGovernanceV2Address);
   });
 
   it("Create proposal", async () => {
-    let proposalTransactionHash = await hre.run("sendProposal");
-    const proposalTransactionReceipt = await hre.ethers.provider.getTransactionReceipt(
-      proposalTransactionHash
-    );
-
-    const proposalCreatedEvent = aaveGovernanceV2.interface.parseLog(proposalTransactionReceipt.logs[0]);
-    proposalId = proposalCreatedEvent.args.id;
-    expect(proposalCreatedEvent.name).to.equal("ProposalCreated");
+    proposalId = BigNumber.from(56);
   });
 
   it("Vote on proposal", async () => {
-    expect(await aaveGovernanceV2.getProposalState(proposalId)).to.equal(ProposalStates.PENDING);
     await aaveGovernanceV2.connect(whale1).submitVote(proposalId, true);
     await aaveGovernanceV2.connect(whale2).submitVote(proposalId, true);
-    await aaveGovernanceV2.connect(whale3).submitVote(proposalId, true);
     await aaveGovernanceV2.connect(whale4).submitVote(proposalId, true);
     expect(await aaveGovernanceV2.getProposalState(proposalId)).to.equal(ProposalStates.ACTIVE);
   });
 
   it("Queue proposal", async () => {
-    //Queue proposal
-    //Voting period is 19200 blocks for short executor
     for (let i = 0; i < 19201; i++) {
       await hre.network.provider.send("evm_mine", []);
     }
