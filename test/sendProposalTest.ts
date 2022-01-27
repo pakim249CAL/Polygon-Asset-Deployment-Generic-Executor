@@ -53,21 +53,21 @@ describe("Proposal Test", function () {
     aaveGovernanceV2 = await AaveGovernanceV2.attach(aaveGovernanceV2Address);
   });
 
-  it("Create proposal", async () => {
+  it("Set proposal id", async () => {
     proposalId = BigNumber.from(56);
   });
 
-  it("Vote on proposal", async () => {
-    await aaveGovernanceV2.connect(whale1).submitVote(proposalId, true);
-    await aaveGovernanceV2.connect(whale2).submitVote(proposalId, true);
-    await aaveGovernanceV2.connect(whale4).submitVote(proposalId, true);
-    expect(await aaveGovernanceV2.getProposalState(proposalId)).to.equal(ProposalStates.ACTIVE);
-  });
+  // it("Vote on proposal", async () => {
+  //   await aaveGovernanceV2.connect(whale1).submitVote(proposalId, true);
+  //   await aaveGovernanceV2.connect(whale2).submitVote(proposalId, true);
+  //   await aaveGovernanceV2.connect(whale4).submitVote(proposalId, true);
+  //   expect(await aaveGovernanceV2.getProposalState(proposalId)).to.equal(ProposalStates.ACTIVE);
+  // });
 
   it("Queue proposal", async () => {
-    for (let i = 0; i < 19201; i++) {
-      await hre.network.provider.send("evm_mine", []);
-    }
+    // for (let i = 0; i < 19201; i++) {
+    //   await hre.network.provider.send("evm_mine", []);
+    // }
     await aaveGovernanceV2.queue(proposalId);
     expect(await aaveGovernanceV2.getProposalState(proposalId)).to.equal(ProposalStates.QUEUED);
   });
